@@ -52,7 +52,11 @@
         .app-icon { height: 150px; display: flex; align-items: center; justify-content: center; background-color: #e9f0fe; overflow: hidden; flex-shrink: 0; }
         .app-icon img { max-width: 80%; max-height: 80%; object-fit: contain; object-position: center; }
         .app-info { padding: 1rem; display: flex; flex-direction: column; flex-grow: 1; }
-        .app-name { font-weight: bold; margin-bottom: 0.5rem; font-size: 1.1rem; color: var(--text-color); }
+        .app-name { font-weight: bold; margin-bottom: 0.5rem; font-size: 1.1rem; color: var(--text-color); line-height: 1.3; /* Ajustez si nécessaire */ }
+        .app-picto { /* Style optionnel pour le picto sur la carte */
+            /* exemple: font-size: 1.4em; margin-bottom: 0.1em; display: inline-block; */
+         }
+        .app-name-text { /* Style optionnel pour le texte du nom sur la carte */ }
         .app-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.75rem; font-size: 0.9rem; color: #666; }
         .tech-tag, .license-tag { padding: 0.25rem 0.6rem; border-radius: 12px; font-size: 0.75rem; line-height: 1.2; }
         .tech-tag { background-color: #f0f0f0; }
@@ -214,60 +218,65 @@
 
     <script defer>
         // --- Données des Applications ---
-        // *** URLS MISES À JOUR AVEC bit.ly ***
+        // *** Structure mise à jour : picto et name séparés ***
         const apps = [
             {
                 id: 'siestefm',
-                name: '🚧<BR>Sieste FM',
+                picto: '🚧', // <-- Picto séparé
+                name: 'Sieste FM', // <-- Nom sans picto
                 tech: ['html'],
                 category: 'musique',
                 description: 'Sieste FM est une webradio conçue pour favoriser la relaxation et la méditation. Elle propose une sélection de musiques apaisantes, telles que "Blues in the Light of Dawn", pour créer une ambiance propice au repos. L\'application inclut des options de minuterie (10, 15, 30 minutes ou illimité) pour programmer une sieste, ainsi qu\'une fonction d\'alarme musicale pour un réveil en douceur. Parfaite pour une pause détente à tout moment de la journée.',
                 updated: 'Il y a 10 heures',
-                demoUrl: 'https://bit.ly/siestefm', // URL Corrigée
-                sourceUrl: 'https://bit.ly/siestefm', // URL Corrigée (si différente, mettre la bonne)
+                demoUrl: 'https://bit.ly/siestefm',
+                sourceUrl: 'https://bit.ly/siestefm',
                 image: 'images/logo_siestefm.png',
-                previewImage: 'images/siestefm_preview.png', // Assurez-vous que ce chemin est correct
+                previewImage: 'images/siestefm_preview.png',
                 license: null
             },
             {
                 id: 'sotocawebradio',
-                name: '🚧<BR>SOTOCA WebRadio',
+                picto: '🚧', // <-- Picto séparé
+                name: 'SOTOCA WebRadio', // <-- Nom sans picto
                 tech: ['javascript'],
                 category: 'musique',
                 description: 'SOTOCA WebRadio est une application de webradio personnalisable qui offre une large variété de stations pour répondre à tous les goûts musicaux. Que vous préfériez des sons calmes et puissants, des rythmes entraînants ou des mélodies spirituelles comme "Maylo" par Jensetis der Grenzen, cette webradio vous permet de choisir parmi des catégories telles que "Horizon Infini", "Calme Puissant", "Esprit Aiguisé", et "Quête Sauvage". Une expérience musicale immersive pour toutes les humeurs.',
                 updated: 'Il y a 20 heures',
-                demoUrl: 'https://bit.ly/sotocawebradio', // URL Corrigée
-                sourceUrl: 'https://bit.ly/sotocawebradio', // URL Corrigée (si différente, mettre la bonne)
+                demoUrl: 'https://bit.ly/sotocawebradio',
+                sourceUrl: 'https://bit.ly/sotocawebradio',
                 image: 'images/logo_sotocawebradio.png',
-                previewImage: 'images/sotocawebradio_preview.png', // Assurez-vous que ce chemin est correct
+                previewImage: 'images/sotocawebradio_preview.png',
                 license: null
             },
             {
                 id: 'larouedelavie',
-                name: '🌟<Br>La Roue de la Vie',
+                picto: '🌟', // <-- Picto séparé
+                name: 'La Roue de la Vie', // <-- Nom sans picto
                 tech: ['javascript'],
                 category: 'developpement',
                 description: 'La Roue de la Vie est un outil interactif conçu pour vous aider à évaluer et équilibrer les différents aspects de votre vie personnelle. À travers une interface intuitive, vous pouvez noter des domaines clés tels que la santé physique, le mental, et d\'autres aspects de votre bien-être sur une échelle de 1 à 10. L\'application génère une visualisation graphique sous forme de roue, vous permettant d\'identifier les déséquilibres et de définir des objectifs pour améliorer votre épanouissement global.',
                 updated: 'Il y a 20 heures',
-                demoUrl: 'https://bit.ly/LaRoueDeLaVie', // URL Corrigée
-                sourceUrl: 'https://bit.ly/LaRoueDeLaVie', // URL Corrigée (si différente, mettre la bonne)
+                demoUrl: 'https://bit.ly/LaRoueDeLaVie',
+                sourceUrl: 'https://bit.ly/LaRoueDeLaVie',
                 image: 'images/logo_larouedelavie.png',
-                previewImage: 'images/larouedelavie_preview.png', // Assurez-vous que ce chemin est correct
+                previewImage: 'images/larouedelavie_preview.png',
                 license: null
             },
             {
                 id: 'danslatetedunchampion',
-                name: '🌟🌟🌟<Br>Dans la Tête d\'un Champion',
+                picto: '🌟🌟🌟', // <-- Picto séparé
+                name: 'Dans la Tête d\'un Champion', // <-- Nom sans picto
                 tech: ['html'],
                 category: 'jeux',
                 description: 'Dans la Tête d\'un Champion est un jeu de réflexion et de stratégie qui met à l\'épreuve vos compétences cognitives et tactiques. Inspiré des jeux télévisés, il propose des défis où vous devez sélectionner et placer des réponses dans une grille pour accumuler des points. Avec des options de mise (75% ou 100% des gains), des statistiques de réussite (par exemple, 89%), et des historiques de parties, ce jeu offre une expérience immersive pour les amateurs de quiz et de challenges intellectuels.',
                 updated: 'Il y a 4 jours',
-                demoUrl: 'https://bit.ly/DansLaTeteDunChampion', // URL Corrigée
-                sourceUrl: 'https://bit.ly/DansLaTeteDunChampion', // URL Corrigée (si différente, mettre la bonne)
+                demoUrl: 'https://bit.ly/DansLaTeteDunChampion',
+                sourceUrl: 'https://bit.ly/DansLaTeteDunChampion',
                 image: 'images/logo_danslatetedunchampion.png',
-                previewImage: 'images/danslatetedunchampion_preview.png', // Assurez-vous que ce chemin est correct
+                previewImage: 'images/danslatetedunchampion_preview.png',
                 license: null
             }
+            // Ajoutez d'autres applications ici en suivant le même format picto/name
         ];
 
         // --- Éléments du DOM ---
@@ -297,14 +306,23 @@
             appsGrid.innerHTML = '';
             if (!appsToShow || appsToShow.length === 0) { appsGrid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; color: #777;">Aucune application trouvée.</p>'; return; }
             appsToShow.forEach(app => {
-                 const appCard = document.createElement('div');
+                const appCard = document.createElement('div');
                 appCard.className = 'app-card';
                 appCard.dataset.id = app.id;
-                 const shortDescription = app.description.length > 100 ? app.description.substring(0, 100) + '...' : app.description;
+                const shortDescription = app.description.length > 100 ? app.description.substring(0, 100) + '...' : app.description;
+
+                // *** MODIFIÉ : Utilisation de app.picto et app.name séparément avec <br> ***
+                const appNameHTML = `
+                    <div class="app-name">
+                        ${app.picto ? `<span class="app-picto">${app.picto}</span><br>` : ''}
+                        <span class="app-name-text">${app.name || 'Nom App'}</span>
+                    </div>
+                `;
+
                 appCard.innerHTML = `
                     <div class="app-icon"><img src="${app.image || 'images/placeholder.png'}" alt="Icône ${app.name || 'App'}" loading="lazy"></div>
                     <div class="app-info">
-                        <div class="app-name">${app.name || 'Nom App'}</div>
+                        ${appNameHTML}
                         <div class="app-meta"></div>
                         <div class="app-description">${shortDescription}</div>
                         <div class="update-info">Mis à jour ${app.updated || 'récemment'}</div>
@@ -315,18 +333,30 @@
             });
         }
         function filterAppsByCategory(category) { return category === 'all' ? apps : apps.filter(app => app.category === category); }
+        // La recherche se fait toujours sur le nom et la description, pas sur le picto.
         function filterAppsBySearch(term) { const lowerCaseTerm = term.toLowerCase().trim(); if (!lowerCaseTerm) return apps; return apps.filter(app => app.name.toLowerCase().includes(lowerCaseTerm) || app.description.toLowerCase().includes(lowerCaseTerm)); }
 
         function openAppModal(app) {
             if (!modal || !app) { console.error("Modale ou données App manquantes."); return; }
+
+            // Utilise app.name pour l'alt text
             if (modalIcon) modalIcon.innerHTML = `<img src="${app.image || ''}" alt="Icône ${app.name || 'App'}">`; else console.warn("modalIcon non trouvé");
-            if (modalTitle) modalTitle.textContent = app.name || 'Application'; else console.warn("modalTitle non trouvé");
+
+            // *** MODIFIÉ : Affiche picto (si existe) + espace + nom dans le titre ***
+            if (modalTitle) {
+                 modalTitle.textContent = `${app.picto ? app.picto + ' ' : ''}${app.name || 'Application'}`;
+            } else {
+                 console.warn("modalTitle non trouvé");
+            }
+
             if (modalCategory) modalCategory.textContent = capitalizeFirstLetter(app.category) || 'Divers'; else console.warn("modalCategory non trouvé");
             if (modalDescription) modalDescription.textContent = app.description || 'Pas de description.'; else console.warn("modalDescription non trouvé");
-            if (startAppBtn) { startAppBtn.href = app.demoUrl || '#'; } else { console.warn("startAppBtn non trouvé"); } // URL Corrigée ici
+            if (startAppBtn) { startAppBtn.href = app.demoUrl || '#'; } else { console.warn("startAppBtn non trouvé"); }
             if (modalImagePreviewContainer && modalImagePreview) {
                 if (app.previewImage && app.previewImage.trim() !== '') {
-                    modalImagePreview.src = app.previewImage; modalImagePreview.alt = `Aperçu de ${app.name || 'App'}`;
+                    modalImagePreview.src = app.previewImage;
+                    // Utilise app.name pour l'alt text
+                    modalImagePreview.alt = `Aperçu de ${app.name || 'App'}`;
                     modalImagePreviewContainer.classList.remove('hidden');
                 } else {
                     modalImagePreview.src = ''; modalImagePreview.alt = ''; modalImagePreviewContainer.classList.add('hidden');
