@@ -227,7 +227,7 @@
             position: relative;
             background: linear-gradient(135deg, #ffffff, #f0f4ff);
             border-radius: 12px;
-            max-width: 700px;
+            max-width: 850px; /* Augmenté pour la mise en page 2 colonnes */
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
@@ -250,6 +250,7 @@
             cursor: pointer;
             color: #888;
             transition: color 0.2s, transform 0.2s;
+            z-index: 10; /* Assure qu'il est au-dessus du contenu */
         }
 
         .close-modal:hover {
@@ -260,28 +261,28 @@
         .modal-header {
             display: flex;
             align-items: center;
-            margin-bottom: 1.5rem; /* Espace avant l'image */
-            border-bottom: 1px solid #eee;
+            margin-bottom: 1.5rem;
             padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
             gap: 1.5rem;
         }
 
         .modal-icon {
-            width: 80px;
-            height: 80px;
+            width: 60px; /* Peut-être réduire un peu l'icône */
+            height: 60px;
             border-radius: 12px;
             flex-shrink: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            border: 2px solid #ddd;
+            border: 1px solid #ddd; /* Bordure plus légère */
             background-color: #fff;
         }
 
         .modal-icon img {
-            max-width: 100%;
-            max-height: 100%;
+            max-width: 90%; /* Ajustement taille interne */
+            max-height: 90%;
             object-fit: contain;
             object-position: center;
         }
@@ -291,8 +292,8 @@
         }
 
         .modal-app-info h2 {
-            margin: 0 0 0.5rem 0;
-            font-size: 1.8rem;
+            margin: 0 0 0.3rem 0; /* Moins d'espace sous le titre */
+            font-size: 1.6rem; /* Titre légèrement réduit */
             color: var(--primary-color);
             line-height: 1.3;
         }
@@ -301,7 +302,7 @@
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0; /* Pas de marge en bas ici */
         }
         .modal-tech-tags .tech-tag, .modal-tech-tags .license-tag {
              padding: 0.25rem 0.6rem;
@@ -311,44 +312,56 @@
         }
         .modal-tech-tags .license-tag { margin-left: 0; }
 
-        /* --- Styles pour l'image d'aperçu dans la modale --- */
-        .modal-preview-image {
-            margin-bottom: 1.5rem; /* Espace avant la description */
-            text-align: center;
+
+        /* --- NOUVEAU: Conteneur pour les colonnes --- */
+        .modal-body-columns {
+            display: flex;
+            gap: 2rem; /* Espace entre les colonnes */
+            margin-bottom: 2rem; /* Espace avant les boutons d'action */
+            align-items: flex-start; /* Aligner le haut des colonnes */
+        }
+
+        /* --- Colonne Image (Ancien .modal-preview-image) --- */
+        .modal-column-image {
+            flex: 0 0 40%; /* Ne grandit pas, ne rétrécit pas, base de 40% */
+            /* Ou utiliser une largeur fixe : */
+            /* flex: 0 0 300px; */
+            /* max-width: 350px; */ /* Limite optionnelle */
             background-color: #f0f0f0;
             border-radius: 8px;
             overflow: hidden;
         }
-
+        .modal-column-image.hidden { /* Pour cacher si pas d'image */
+            display: none;
+        }
         #modalImagePreview {
             display: block;
-            max-width: 100%;
-            height: auto;
-            max-height: 45vh; /* Limite la hauteur */
-            object-fit: contain; /* Ou 'cover' si tu préfères remplir */
-            object-position: center;
-            margin: 0 auto;
+            width: 100%; /* Prend toute la largeur de sa colonne */
+            height: auto; /* Maintient les proportions */
+            /* max-height: none; */ /* On enlève la limite de hauteur ici */
+            object-fit: contain; /* Ou 'cover' */
+            object-position: center top; /* Aligner en haut si contain */
             border-radius: 6px;
         }
 
-        /* Cache le conteneur si l'image n'est pas définie (géré par JS) */
-        .modal-preview-image.hidden {
-            display: none;
+        /* --- Colonne Texte --- */
+        .modal-column-text {
+            flex: 1; /* Prend l'espace restant */
+            min-width: 0; /* Important pour flexbox pour permettre le wrapping du texte */
         }
-        /* Fin styles image aperçu */
-
-
         .modal-description {
             line-height: 1.7;
-            margin-bottom: 2rem;
+            margin-bottom: 0; /* Plus besoin de marge ici */
             color: #444;
-            font-size: 1rem;
+            font-size: 0.95rem; /* Texte légèrement plus petit */
         }
+        /* FIN NOUVEAU Layout colonnes */
+
 
         .modal-actions {
             display: flex;
             justify-content: center;
-            margin-top: 1rem;
+            margin-top: 1rem; /* Garder ou ajuster */
         }
 
         /* --- Boutons --- */
@@ -390,83 +403,101 @@
         }
 
         /* --- Responsive --- */
+        /* Tablette et en dessous */
         @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.5rem;
-            }
-
-            .search-bar {
-                width: 100%;
-                margin: 0.5rem 0 0 0;
-            }
-
-            main {
-                margin-top: 1rem;
-            }
-
-            .apps-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-                gap: 1rem;
-            }
-
             .modal-content {
-                padding: 1.5rem;
-                max-height: 85vh;
-            }
-
-            .modal-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
-                 margin-bottom: 1rem; /* Réduit marge si image suit */
-                 padding-bottom: 1rem;
-                 border-bottom: none; /* Enlève la ligne ici, l'image fait séparation */
-            }
-             /* Optionnel: Ajouter une ligne après l'en-tête si pas d'image */
-             .modal-preview-image.hidden + .modal-description {
-                  margin-top: -0.5rem; /* Compense l'absence de marge bottom de l'header */
-                  padding-top: 1.5rem;
-                  border-top: 1px solid #eee;
+                 max-width: 600px; /* Réduit un peu la largeur max */
+                 padding: 1.5rem;
              }
 
+            .modal-header {
+                /* Garder la disposition flexible par défaut ici */
+                /* Si besoin d'empiler sur tablette, décommenter : */
+                /* flex-direction: column; */
+                /* align-items: flex-start; */
+                 gap: 1rem;
+                 margin-bottom: 1.5rem; /* Rétablir la marge */
+                 padding-bottom: 1rem;
+                 border-bottom: 1px solid #eee; /* Rétablir la bordure */
+            }
 
-            .modal-icon {
-                width: 60px;
-                height: 60px;
-                margin-right: 0;
-                align-self: flex-start;
+            .modal-icon { /* Ajustements si header empilé */
+                 /* width: 60px; */
+                 /* height: 60px; */
             }
 
             .modal-app-info h2 {
-                font-size: 1.6rem;
+                 font-size: 1.5rem;
+             }
+
+            /* --- NOUVEAU: Empiler les colonnes --- */
+            .modal-body-columns {
+                flex-direction: column; /* Empile l'image et le texte */
+                gap: 1.5rem; /* Espace entre image et texte */
+                margin-bottom: 1.5rem;
             }
 
-            .modal-description {
-                font-size: 0.95rem;
+            .modal-column-image {
+                flex-basis: auto; /* Annule la base de 40% */
+                width: 100%; /* Prend toute la largeur */
             }
+
+            .modal-column-text {
+                 width: 100%; /* Prend toute la largeur */
+             }
+            #modalImagePreview {
+                 max-height: 50vh; /* Limite hauteur sur mobile */
+             }
+
+            .modal-description {
+                 font-size: 0.9rem;
+             }
 
              .btn {
                  padding: 0.7rem 1.5rem;
                  font-size: 0.95rem;
              }
-             #modalImagePreview {
-                 max-height: 40vh; /* Un peu moins haut sur mobile */
-             }
         }
 
+        /* Mobile petit */
          @media (max-width: 480px) {
+             .header-content {
+                 flex-direction: column;
+                 align-items: flex-start;
+                 gap: 0.5rem;
+             }
+             .search-bar {
+                 width: 100%;
+                 margin: 0.5rem 0 0 0;
+             }
              .apps-grid {
                  grid-template-columns: 1fr;
+                 gap: 1rem;
              }
              .logo { font-size: 1.3rem; }
              .search-bar input { font-size: 0.9rem; }
              .category { font-size: 0.85rem; padding: 0.4rem 0.8rem; }
-              #modalImagePreview {
-                  max-height: 35vh; /* Encore moins haut sur petit écran */
-              }
+
+             .modal-content { padding: 1rem; }
+             .modal-header { gap: 0.8rem; }
+             .modal-icon { width: 50px; height: 50px;}
+             .modal-app-info h2 { font-size: 1.4rem; }
+             .modal-body-columns { gap: 1rem; }
+             #modalImagePreview { max-height: 40vh; }
+             .modal-description { font-size: 0.85rem; }
+
          }
+         /* Styles pour les cartes */
+          @media (max-width: 768px) {
+             .apps-grid {
+                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                 gap: 1rem;
+             }
+         }
+         @media (max-width: 480px) {
+             .apps-grid { grid-template-columns: 1fr; }
+         }
+
     </style>
 </head>
 <body>
@@ -481,7 +512,6 @@
 
     <main>
         <div class="categories">
-            <!-- Catégories (la première est active par défaut) -->
             <div class="category active" data-category="all">Tous</div>
             <div class="category" data-category="musique">Musique</div>
             <div class="category" data-category="developpement">Développement personnel</div>
@@ -489,35 +519,36 @@
         </div>
 
         <div class="apps-grid" id="appsGrid">
-            <!-- Les cartes d'application seront générées ici par JavaScript -->
+            <!-- Cartes générées par JS -->
         </div>
     </main>
 
-    <!-- Modale pour afficher les détails de l'application -->
+    <!-- Modale -->
     <div id="appModal" class="modal">
         <div class="modal-content">
             <span class="close-modal" id="closeModal" title="Fermer">×</span>
             <div class="modal-header">
-                <div class="modal-icon" id="modalIcon">
-                    <!-- L'icône de l'app sera chargée ici -->
-                </div>
+                <div class="modal-icon" id="modalIcon"></div>
                 <div class="modal-app-info">
-                    <h2 id="modalTitle">Nom de l'application</h2>
-                    <div class="modal-tech-tags" id="modalTechTags">
-                        <!-- Les tags techniques seront chargés ici -->
-                    </div>
+                    <h2 id="modalTitle">Nom App</h2>
+                    <div class="modal-tech-tags" id="modalTechTags"></div>
                 </div>
             </div>
 
-            <!-- Conteneur pour l'image d'aperçu -->
-            <div class="modal-preview-image hidden" id="modalImagePreviewContainer">
-                 <!-- Image chargée par JS -->
-                <img id="modalImagePreview" src="" alt="Aperçu de l'application" loading="lazy">
+            <!-- NOUVEAU: Conteneur pour la disposition en colonnes -->
+            <div class="modal-body-columns">
+                <!-- Colonne 1: Image Preview -->
+                <div class="modal-column-image hidden" id="modalImagePreviewContainer">
+                    <img id="modalImagePreview" src="" alt="Aperçu" loading="lazy">
+                </div>
+                <!-- Colonne 2: Texte -->
+                <div class="modal-column-text">
+                    <div class="modal-description" id="modalDescription">Description...</div>
+                    <!-- On pourrait ajouter d'autres infos texte ici si besoin -->
+                </div>
             </div>
+            <!-- FIN Conteneur colonnes -->
 
-            <div class="modal-description" id="modalDescription">
-                La description complète de l'application sera chargée ici...
-            </div>
             <div class="modal-actions">
                 <a id="startAppBtn" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Démarrer l'application</a>
             </div>
@@ -530,20 +561,18 @@
 
     <script defer>
         // --- Données des Applications ---
-        // IMPORTANT: Mettez à jour les chemins `image` (icône) et `previewImage` (aperçu)
-        // pour qu'ils correspondent à l'emplacement de vos fichiers sur GitHub Pages.
         const apps = [
-            {
+             {
                 id: 'siestefm',
                 name: 'Sieste FM',
                 tech: ['html'],
                 category: 'musique',
                 description: 'Sieste FM est une webradio conçue pour favoriser la relaxation et la méditation. Elle propose une sélection de musiques apaisantes, telles que "Blues in the Light of Dawn", pour créer une ambiance propice au repos. L\'application inclut des options de minuterie (10, 15, 30 minutes ou illimité) pour programmer une sieste, ainsi qu\'une fonction d\'alarme musicale pour un réveil en douceur. Parfaite pour une pause détente à tout moment de la journée.',
                 updated: 'Il y a 10 heures',
-                demoUrl: 'https://ericsotoca.github.io/SiesteFM',
-                sourceUrl: 'https://ericsotoca.github.io/SiesteFM',
-                image: 'images/logo_siestefm.png', // Icône pour la carte et header modale
-                previewImage: 'images/siestefm_preview.png', // Image d'aperçu pour la modale
+                demoUrl: 'https://bit.ly/SiesteFM',
+                sourceUrl: 'https://bit.ly/SiesteFM',
+                image: 'images/logo_siestefm.png',
+                previewImage: 'images/siestefm_preview.png', // !! REMPLACER !!
                 license: null
             },
             {
@@ -553,10 +582,10 @@
                 category: 'musique',
                 description: 'SOTOCA WebRadio est une application de webradio personnalisable qui offre une large variété de stations pour répondre à tous les goûts musicaux. Que vous préfériez des sons calmes et puissants, des rythmes entraînants ou des mélodies spirituelles comme "Maylo" par Jensetis der Grenzen, cette webradio vous permet de choisir parmi des catégories telles que "Horizon Infini", "Calme Puissant", "Esprit Aiguisé", et "Quête Sauvage". Une expérience musicale immersive pour toutes les humeurs.',
                 updated: 'Il y a 20 heures',
-                demoUrl: 'https://ericsotoca.github.io/webradio',
-                sourceUrl: 'https://ericsotoca.github.io/webradio',
+                demoUrl: 'https://bit.ly/webradio',
+                sourceUrl: 'https://bit.ly/webradio',
                 image: 'images/logo_sotocawebradio.png',
-                previewImage: 'images/sotocawebradio_preview.png', // REMPLACER par le vrai chemin
+                previewImage: 'images/sotocawebradio_preview.png', // !! REMPLACER !!
                 license: null
             },
             {
@@ -566,10 +595,10 @@
                 category: 'developpement',
                 description: 'La Roue de la Vie est un outil interactif conçu pour vous aider à évaluer et équilibrer les différents aspects de votre vie personnelle. À travers une interface intuitive, vous pouvez noter des domaines clés tels que la santé physique, le mental, et d\'autres aspects de votre bien-être sur une échelle de 1 à 10. L\'application génère une visualisation graphique sous forme de roue, vous permettant d\'identifier les déséquilibres et de définir des objectifs pour améliorer votre épanouissement global.',
                 updated: 'Il y a 20 heures',
-                demoUrl: 'https://ericsotoca.github.io/larouedelavie',
-                sourceUrl: 'https://ericsotoca.github.io/larouedelavie',
+                demoUrl: 'https://bit.ly/LaRoueDeLaVie',
+                sourceUrl: 'https://bit.ly/LaRoueDeLaVie',
                 image: 'images/logo_larouedelavie.png',
-                previewImage: 'images/larouedelavie_preview.png', // REMPLACER par le vrai chemin
+                previewImage: 'images/larouedelavie_preview.png', // !! REMPLACER !!
                 license: null
             },
             {
@@ -579,10 +608,10 @@
                 category: 'jeux',
                 description: 'Dans la Tête d\'un Champion est un jeu de réflexion et de stratégie qui met à l\'épreuve vos compétences cognitives et tactiques. Inspiré des jeux télévisés, il propose des défis où vous devez sélectionner et placer des réponses dans une grille pour accumuler des points. Avec des options de mise (75% ou 100% des gains), des statistiques de réussite (par exemple, 89%), et des historiques de parties, ce jeu offre une expérience immersive pour les amateurs de quiz et de challenges intellectuels.',
                 updated: 'Il y a 4 jours',
-                demoUrl: 'https://ericsotoca.github.io/awale',
-                sourceUrl: 'https://ericsotoca.github.io/awale',
+                demoUrl: 'https://bit.ly/DansLaTeteDunChampion',
+                sourceUrl: 'https://bit.ly/DansLaTeteDunChampion',
                 image: 'images/logo_danslatetedunchampion.png',
-                previewImage: 'images/danslatetedunchampion_preview.png', // REMPLACER par le vrai chemin
+                previewImage: 'images/danslatetedunchampion_preview.png', // !! REMPLACER !!
                 license: null
             }
         ];
@@ -600,22 +629,19 @@
         const modalDescription = document.getElementById('modalDescription');
         const startAppBtn = document.getElementById('startAppBtn');
         const copyrightYearSpan = document.getElementById('copyright-year');
-        // Éléments pour l'image d'aperçu
         const modalImagePreview = document.getElementById('modalImagePreview');
         const modalImagePreviewContainer = document.getElementById('modalImagePreviewContainer');
 
-        // --- Fonctions ---
+        // --- Fonctions --- (JavaScript reste identique à la version précédente)
 
-        // Génère les cartes d'application
         function generateAppCards(appsToShow) {
             appsGrid.innerHTML = '';
             if (appsToShow.length === 0) {
                  appsGrid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; color: #777;">Aucune application trouvée.</p>';
                  return;
             }
-
-            appsToShow.forEach(app => {
-                const appCard = document.createElement('div');
+            appsToShow.forEach(app => { /* ... (code inchangé) ... */
+                 const appCard = document.createElement('div');
                 appCard.className = 'app-card';
                 appCard.dataset.id = app.id;
 
@@ -650,33 +676,16 @@
                 appsGrid.appendChild(appCard);
             });
         }
+        function filterAppsByCategory(category) { return category === 'all' ? apps : apps.filter(app => app.category === category); }
+        function filterAppsBySearch(term) { const lowerCaseTerm = term.toLowerCase().trim(); if (!lowerCaseTerm) return apps; return apps.filter(app => app.name.toLowerCase().includes(lowerCaseTerm) || app.description.toLowerCase().includes(lowerCaseTerm) || app.tech.some(tech => tech.toLowerCase().includes(lowerCaseTerm))); }
 
-        // Filtre par catégorie
-        function filterAppsByCategory(category) {
-            return category === 'all' ? apps : apps.filter(app => app.category === category);
-        }
-
-        // Filtre par recherche
-        function filterAppsBySearch(term) {
-            const lowerCaseTerm = term.toLowerCase().trim();
-            if (!lowerCaseTerm) return apps;
-            return apps.filter(app =>
-                app.name.toLowerCase().includes(lowerCaseTerm) ||
-                app.description.toLowerCase().includes(lowerCaseTerm) ||
-                app.tech.some(tech => tech.toLowerCase().includes(lowerCaseTerm))
-            );
-        }
-
-        // Ouvre la modale
         function openAppModal(app) {
-            // Contenu standard
             modalIcon.innerHTML = `<img src="${app.image}" alt="Icône ${app.name}">`;
             modalTitle.textContent = app.name;
             modalDescription.textContent = app.description;
             startAppBtn.href = app.demoUrl;
 
-            // Tags techniques
-            modalTechTags.innerHTML = app.tech.map(tech => {
+            modalTechTags.innerHTML = app.tech.map(tech => { /* ... (code inchangé) ... */
                  let techClass = '', techName = '';
                  switch (tech.toLowerCase()) {
                     case 'html': techClass = 'tech-html'; techName = 'HTML'; break;
@@ -685,92 +694,53 @@
                  }
                 return `<span class="tech-tag ${techClass}">${techName}</span>`;
             }).join('');
+            if (app.license) { const licenseTag = document.createElement('span'); licenseTag.className = 'license-tag'; licenseTag.textContent = app.license; modalTechTags.appendChild(licenseTag); }
 
-            // Tag licence
-            if (app.license) {
-                const licenseTag = document.createElement('span');
-                licenseTag.className = 'license-tag';
-                licenseTag.textContent = app.license;
-                modalTechTags.appendChild(licenseTag);
-            }
-
-            // Gère l'image d'aperçu
             if (app.previewImage && app.previewImage.trim() !== '') {
                 modalImagePreview.src = app.previewImage;
                 modalImagePreview.alt = `Aperçu de ${app.name}`;
-                modalImagePreviewContainer.classList.remove('hidden'); // Rend visible
+                modalImagePreviewContainer.classList.remove('hidden');
             } else {
-                modalImagePreview.src = ''; // Efface source précédente
+                modalImagePreview.src = '';
                 modalImagePreview.alt = '';
-                modalImagePreviewContainer.classList.add('hidden'); // Cache le conteneur
+                modalImagePreviewContainer.classList.add('hidden');
             }
-
             modal.classList.add('show');
             document.body.style.overflow = 'hidden';
+            // Faire défiler la modale vers le haut lors de l'ouverture
+            modal.querySelector('.modal-content').scrollTop = 0;
         }
 
-        // Ferme la modale
         function closeAppModal() {
             modal.classList.remove('show');
             document.body.style.overflow = '';
-             // Optionnel: Réinitialiser l'image pour libérer mémoire / éviter flash
              modalImagePreview.src = '';
              modalImagePreviewContainer.classList.add('hidden');
         }
+        function updateCopyrightYear() { if (copyrightYearSpan) { copyrightYearSpan.textContent = new Date().getFullYear(); } }
 
-        // Met à jour l'année du copyright
-        function updateCopyrightYear() {
-            if (copyrightYearSpan) {
-                copyrightYearSpan.textContent = new Date().getFullYear();
-            }
-        }
-
-        // --- Écouteurs d'Événements ---
-
-        // Catégories
-        categoryButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                document.querySelector('.category.active').classList.remove('active');
-                button.classList.add('active');
-                const selectedCategory = button.dataset.category;
-                searchInput.value = '';
-                generateAppCards(filterAppsByCategory(selectedCategory));
-            });
-        });
-
-        // Accueil (logo)
-        homeLink.addEventListener('click', () => {
-            document.querySelector('.category.active').classList.remove('active');
+        // --- Écouteurs d'Événements --- (JavaScript reste identique à la version précédente)
+        categoryButtons.forEach(button => { button.addEventListener('click', () => { /* ... (code inchangé) ... */
+             document.querySelector('.category.active').classList.remove('active');
+            button.classList.add('active');
+            const selectedCategory = button.dataset.category;
+            searchInput.value = '';
+            generateAppCards(filterAppsByCategory(selectedCategory));
+        }); });
+        homeLink.addEventListener('click', () => { /* ... (code inchangé) ... */
+             document.querySelector('.category.active').classList.remove('active');
             document.querySelector('.category[data-category="all"]').classList.add('active');
             searchInput.value = '';
             generateAppCards(apps);
         });
-
-        // Recherche (avec debounce)
-        let searchTimeout;
-        searchInput.addEventListener('input', () => {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => {
-                const searchTerm = searchInput.value;
-                 document.querySelector('.category.active')?.classList.remove('active'); // Optionnel: désélectionne cat.
-                 document.querySelector('.category[data-category="all"]')?.classList.add('active'); // Sélectionne 'Tous'
-                 generateAppCards(filterAppsBySearch(searchTerm));
-            }, 250);
-        });
-
-        // Fermeture modale (bouton, overlay, Echap)
+        let searchTimeout; searchInput.addEventListener('input', () => { clearTimeout(searchTimeout); searchTimeout = setTimeout(() => { const searchTerm = searchInput.value; document.querySelector('.category.active')?.classList.remove('active'); document.querySelector('.category[data-category="all"]')?.classList.add('active'); generateAppCards(filterAppsBySearch(searchTerm)); }, 250); });
         closeModalBtn.addEventListener('click', closeAppModal);
-        modal.addEventListener('click', (event) => {
-            if (event.target === modal) closeAppModal();
-        });
-        document.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape' && modal.classList.contains('show')) closeAppModal();
-        });
-
+        modal.addEventListener('click', (event) => { if (event.target === modal) closeAppModal(); });
+        document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && modal.classList.contains('show')) closeAppModal(); });
 
         // --- Initialisation ---
         updateCopyrightYear();
-        generateAppCards(apps); // Affichage initial
+        generateAppCards(apps);
 
     </script>
 </body>
