@@ -5,22 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mes Applications</title>
     <style>
+        /* --- Variables CSS --- */
         :root {
             --primary-color: #4285f4;
             --secondary-color: #34a853;
             --text-color: #333;
             --bg-light: #f8f9fa;
             --card-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            --card-hover-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-        
+
+        /* --- Styles Généraux --- */
         body {
             font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen, Ubuntu, Cantarell, sans-serif;
             margin: 0;
             padding: 0;
             color: var(--text-color);
             background-color: var(--bg-light);
+            line-height: 1.6; /* Améliore la lisibilité */
         }
-        
+
+        /* --- Header --- */
         header {
             background-color: white;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -28,8 +33,9 @@
             position: sticky;
             top: 0;
             z-index: 100;
+            border-bottom: 1px solid #eee; /* Ajout d'une ligne subtile */
         }
-        
+
         .header-content {
             max-width: 1200px;
             margin: 0 auto;
@@ -37,41 +43,47 @@
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .logo {
             font-size: 1.5rem;
             font-weight: bold;
             color: var(--primary-color);
+            cursor: pointer;
+            text-decoration: none; /* Au cas où on le transformerait en lien */
         }
-        
+
         .search-bar {
             flex-grow: 1;
             margin: 0 2rem;
             position: relative;
         }
-        
+
         .search-bar input {
             width: 100%;
             padding: 0.75rem 1rem;
             border-radius: 24px;
             border: 1px solid #ddd;
             font-size: 1rem;
+            box-sizing: border-box; /* Inclut padding et border dans la largeur */
         }
-        
+
+        /* --- Main Content --- */
         main {
             max-width: 1200px;
-            margin: 0 auto;
+            margin: 1.5rem auto; /* Ajout d'un peu plus d'espace */
             padding: 1rem;
         }
-        
+
+        /* --- Catégories --- */
         .categories {
             display: flex;
             overflow-x: auto;
             gap: 1rem;
-            padding: 0.5rem 0;
+            padding-bottom: 0.5rem; /* Espace pour la barre de défilement si visible */
             margin-bottom: 1.5rem;
+            -webkit-overflow-scrolling: touch; /* Défilement plus fluide sur iOS */
         }
-        
+
         .category {
             padding: 0.5rem 1rem;
             background-color: white;
@@ -79,484 +91,674 @@
             white-space: nowrap;
             cursor: pointer;
             border: 1px solid #ddd;
+            transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+            font-size: 0.9rem; /* Légère réduction pour la compacité */
         }
-        
+
+        .category:hover {
+            background-color: #f0f0f0;
+        }
+
         .category.active {
             background-color: var(--primary-color);
             color: white;
             border-color: var(--primary-color);
         }
-        
+
+        /* --- Grille d'Applications --- */
         .apps-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 1.5rem;
         }
-        
+
+        /* --- Carte d'Application --- */
         .app-card {
             background-color: white;
             border-radius: 8px;
             overflow: hidden;
             box-shadow: var(--card-shadow);
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
             cursor: pointer;
+            display: flex; /* Utilisation de flex pour la structure interne */
+            flex-direction: column;
         }
-        
+
         .app-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: var(--card-hover-shadow);
         }
-        
+
         .app-icon {
             height: 150px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #e9f0fe;
+            background-color: #e9f0fe; /* Couleur de fond légère */
+            overflow: hidden;
+            flex-shrink: 0; /* Empêche l'icône de rétrécir */
         }
-        
-        .app-icon .icon-placeholder {
-            width: 80px;
-            height: 80px;
-            border-radius: 16px;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 2rem;
-            font-weight: bold;
+
+        .app-icon img {
+            max-width: 80%;   /* Utiliser max-width/height pour éviter l'étirement */
+            max-height: 80%;
+            object-fit: contain; /* Garde les proportions */
+            object-position: center; /* Centre l'image si elle est plus petite */
         }
-        
+
         .app-info {
             padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1; /* Permet à cette section de prendre l'espace restant */
         }
-        
+
         .app-name {
             font-weight: bold;
             margin-bottom: 0.5rem;
             font-size: 1.1rem;
+            color: var(--text-color); /* Assure la couleur */
         }
-        
+
         .app-meta {
             display: flex;
             align-items: center;
+            flex-wrap: wrap; /* Permet aux tags de passer à la ligne si besoin */
+            gap: 0.5rem; /* Espace entre les tags */
             margin-bottom: 0.75rem;
             font-size: 0.9rem;
             color: #666;
         }
-        
+
+        .tech-tag, .license-tag {
+            padding: 0.25rem 0.6rem; /* Ajustement padding */
+            border-radius: 12px;
+            font-size: 0.75rem;
+            line-height: 1.2; /* Ajustement hauteur de ligne */
+        }
+
         .tech-tag {
             background-color: #f0f0f0;
-            padding: 0.25rem 0.5rem;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            margin-right: 0.5rem;
         }
-        
-        .tech-html {
-            background-color: #e34c26;
-            color: white;
-        }
-        
-        .tech-js {
-            background-color: #f7df1e;
-            color: black;
-        }
-        
+
+        .tech-html { background-color: #e34c26; color: white; }
+        .tech-js { background-color: #f7df1e; color: black; }
+
         .license-tag {
-            background-color: #f0f0f0;
-            padding: 0.25rem 0.5rem;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            margin-left: auto;
+            background-color: #e0e0e0; /* Couleur légèrement différente */
+            margin-left: auto; /* Pousse à droite */
         }
-        
+
         .app-description {
-            color: #666;
+            color: #555; /* Légèrement plus foncé pour contraste */
             font-size: 0.9rem;
             margin-bottom: 1rem;
+            flex-grow: 1; /* Prend l'espace avant l'info de màj */
         }
-        
+
         .update-info {
-            font-size: 0.85rem;
+            font-size: 0.8rem; /* Encore plus petit */
             color: #999;
+            margin-top: auto; /* Pousse en bas de la carte */
+            padding-top: 0.5rem; /* Espace au-dessus */
         }
-        
+
+        /* --- Modale --- */
         .modal {
-            display: none;
+            display: none; /* Caché par défaut */
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.5);
+            background-color: rgba(0,0,0,0.6);
             z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem; /* Espace sur petits écrans */
+            box-sizing: border-box;
         }
-        
+
+        .modal.show {
+            display: flex; /* Affiché via JS */
+        }
+
         .modal-content {
             position: relative;
-            margin: 10% auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            max-width: 600px;
-            max-height: 80vh;
+            background: linear-gradient(135deg, #ffffff, #f0f4ff);
+            border-radius: 12px;
+            max-width: 700px;
+            width: 100%; /* Prend la largeur dispo jusqu'à max-width */
+            max-height: 90vh; /* Hauteur max pour laisser voir le fond */
             overflow-y: auto;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            padding: 2rem;
+            animation: fadeInScale 0.3s ease-out;
         }
-        
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
         .close-modal {
             position: absolute;
-            top: 10px;
+            top: 15px;
             right: 15px;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
+            line-height: 1; /* Empêche décalage vertical */
             cursor: pointer;
+            color: #888; /* Moins agressif */
+            transition: color 0.2s, transform 0.2s;
         }
-        
+
+        .close-modal:hover {
+            color: var(--primary-color);
+            transform: scale(1.1);
+        }
+
         .modal-header {
             display: flex;
             align-items: center;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1rem;
+            gap: 1.5rem; /* Espace entre icône et infos */
         }
-        
+
         .modal-icon {
-            width: 60px;
-            height: 60px;
+            width: 80px;
+            height: 80px;
             border-radius: 12px;
-            margin-right: 1rem;
+            flex-shrink: 0; /* Empêche de rétrécir */
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            font-weight: bold;
-            font-size: 1.5rem;
+            overflow: hidden;
+            border: 2px solid #ddd;
+            background-color: #fff; /* Fond blanc pour icônes transparentes */
         }
-        
+
+        .modal-icon img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            object-position: center;
+        }
+
+        .modal-app-info {
+            flex-grow: 1;
+        }
+
         .modal-app-info h2 {
             margin: 0 0 0.5rem 0;
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            line-height: 1.3;
         }
-        
+
         .modal-tech-tags {
             display: flex;
+            flex-wrap: wrap; /* Permet le passage à la ligne */
             gap: 0.5rem;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem; /* Réduit l'espace si pas de licence */
         }
-        
+         /* Utilise les mêmes styles de tags que la carte */
+        .modal-tech-tags .tech-tag, .modal-tech-tags .license-tag {
+             padding: 0.25rem 0.6rem;
+             border-radius: 12px;
+             font-size: 0.8rem; /* Légèrement plus grand que sur la carte */
+             line-height: 1.2;
+        }
+        .modal-tech-tags .license-tag { margin-left: 0; } /* Pas besoin de pousser à droite ici */
+
+
         .modal-description {
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
+            line-height: 1.7; /* Augmente interligne pour la lecture */
+            margin-bottom: 2rem;
+            color: #444; /* Texte un peu plus foncé */
+            font-size: 1rem;
         }
-        
+
         .modal-actions {
             display: flex;
-            gap: 1rem;
+            justify-content: center; /* Centre le bouton */
+            margin-top: 1rem; /* Espace avant le bouton */
         }
-        
+
+        /* --- Boutons --- */
         .btn {
-            padding: 0.75rem 1.5rem;
-            border-radius: 4px;
+            display: inline-block; /* Permet padding/margin */
+            padding: 0.75rem 2rem;
+            border-radius: 25px;
             border: none;
             cursor: pointer;
             font-weight: 500;
-            transition: background-color 0.2s;
+            font-size: 1rem;
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            text-align: center;
         }
-        
+
         .btn-primary {
-            background-color: var(--primary-color);
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             color: white;
+            box-shadow: 0 2px 5px rgba(0, 100, 255, 0.3);
         }
-        
-        .btn-secondary {
-            background-color: #f0f0f0;
-            color: var(--text-color);
+
+        .btn-primary:hover, .btn-primary:focus { /* Ajout de :focus pour accessibilité */
+            background: linear-gradient(45deg, #3367d6, #2e8b43);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 100, 255, 0.4);
+            outline: none; /* Supprime l'outline par défaut si focus visible */
         }
-        
-        .btn-primary:hover {
-            background-color: #3367d6;
-        }
-        
-        .btn-secondary:hover {
-            background-color: #e0e0e0;
-        }
-        
+
+        /* --- Footer --- */
         footer {
             text-align: center;
-            padding: 2rem;
+            padding: 2rem 1rem; /* Ajout padding horizontal */
             background-color: white;
             margin-top: 2rem;
             border-top: 1px solid #eee;
             font-size: 0.9rem;
             color: #666;
         }
-        
+
+        /* --- Responsive --- */
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
                 align-items: flex-start;
+                gap: 0.5rem; /* Espace entre logo et barre recherche */
             }
-            
+
             .search-bar {
                 width: 100%;
-                margin: 1rem 0;
+                margin: 0.5rem 0 0 0; /* Ajustement marge */
             }
-            
+
+            main {
+                margin-top: 1rem;
+            }
+
             .apps-grid {
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 1rem; /* Réduit l'espace sur mobile */
             }
+
+            .modal-content {
+                padding: 1.5rem;
+                max-height: 85vh; /* Un peu plus de hauteur sur mobile */
+            }
+
+            .modal-header {
+                flex-direction: column; /* Icône au-dessus du titre */
+                align-items: flex-start; /* Alignement à gauche */
+                gap: 1rem;
+            }
+
+            .modal-icon {
+                width: 60px;
+                height: 60px;
+                margin-right: 0; /* Supprime marge à droite */
+                align-self: flex-start; /* Garde à gauche */
+            }
+
+            .modal-app-info h2 {
+                font-size: 1.6rem; /* Taille de titre adaptée */
+            }
+
+            .modal-description {
+                font-size: 0.95rem; /* Taille de texte adaptée */
+            }
+
+             .btn {
+                 padding: 0.7rem 1.5rem; /* Bouton légèrement plus petit */
+                 font-size: 0.95rem;
+             }
         }
+
+         @media (max-width: 480px) {
+             .apps-grid {
+                /* Une seule colonne sur très petits écrans */
+                grid-template-columns: 1fr;
+             }
+             .app-card {
+                 /* Optionnel: adapter la hauteur de l'icône */
+                 /* .app-icon { height: 120px; } */
+             }
+             .logo { font-size: 1.3rem; }
+             .search-bar input { font-size: 0.9rem; }
+             .category { font-size: 0.85rem; padding: 0.4rem 0.8rem; }
+         }
     </style>
 </head>
 <body>
     <header>
         <div class="header-content">
-            <div class="logo">My App Store</div>
+            <div class="logo" id="homeLink" title="Retour à l'accueil">My App Store</div>
             <div class="search-bar">
                 <input type="text" placeholder="Rechercher une application..." id="searchInput">
             </div>
         </div>
     </header>
-    
+
     <main>
         <div class="categories">
+            <!-- Catégories (la première est active par défaut) -->
             <div class="category active" data-category="all">Tous</div>
-            <div class="category" data-category="html">HTML</div>
-            <div class="category" data-category="javascript">JavaScript</div>
+            <div class="category" data-category="musique">Musique</div>
+            <div class="category" data-category="developpement">Développement personnel</div>
+            <div class="category" data-category="jeux">Jeux</div>
+            <!-- Ajouter d'autres catégories ici si besoin -->
         </div>
-        
+
         <div class="apps-grid" id="appsGrid">
-            <!-- Application cards will be generated here -->
+            <!-- Les cartes d'application seront générées ici par JavaScript -->
+            <!-- Exemple de structure (sera remplacé par JS) :
+            <div class="app-card">
+                <div class="app-icon"><img src="images/placeholder.png" alt="App Icon"></div>
+                <div class="app-info">
+                    <div class="app-name">Nom de l'App</div>
+                    <div class="app-meta">
+                        <span class="tech-tag tech-js">JavaScript</span>
+                        <span class="license-tag">MIT</span>
+                    </div>
+                    <div class="app-description">Courte description ici...</div>
+                    <div class="update-info">Updated X days ago</div>
+                </div>
+            </div>
+             -->
         </div>
     </main>
-    
+
+    <!-- Modale pour afficher les détails de l'application -->
     <div id="appModal" class="modal">
         <div class="modal-content">
-            <span class="close-modal" id="closeModal">&times;</span>
+            <span class="close-modal" id="closeModal" title="Fermer">×</span>
             <div class="modal-header">
-                <div class="modal-icon" id="modalIcon"></div>
+                <div class="modal-icon" id="modalIcon">
+                    <!-- L'icône de l'app sera chargée ici -->
+                </div>
                 <div class="modal-app-info">
-                    <h2 id="modalTitle">App Name</h2>
-                    <div class="modal-tech-tags" id="modalTechTags"></div>
+                    <h2 id="modalTitle">Nom de l'application</h2>
+                    <div class="modal-tech-tags" id="modalTechTags">
+                        <!-- Les tags techniques seront chargés ici -->
+                    </div>
                 </div>
             </div>
             <div class="modal-description" id="modalDescription">
-                Description de l'application...
+                La description complète de l'application sera chargée ici...
             </div>
             <div class="modal-actions">
-                <a id="viewDemoBtn" href="#" target="_blank" class="btn btn-primary">Voir Démo</a>
-                <a id="viewSourceBtn" href="#" target="_blank" class="btn btn-secondary">Code Source</a>
+                <a id="startAppBtn" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Démarrer l'application</a>
             </div>
         </div>
     </div>
-    
+
     <footer>
-        © 2025 My App Store - Tous droits réservés
+        © <span id="copyright-year"></span> My App Store - Tous droits réservés
     </footer>
 
-    <script>
-        // Sample app data (replace with your actual projects)
+    <script defer>
+        // --- Données des Applications ---
+        // NOTE: Assurez-vous que les chemins d'images ('images/nom.png')
+        // correspondent à l'emplacement réel de vos images sur GitHub Pages.
+        // Si les images sont à la racine, utilisez juste 'nom.png'.
+        // Si elles sont hébergées ailleurs, utilisez l'URL complète.
         const apps = [
-            {
-                id: 'playstore',
-                name: 'Play Store',
-                tech: ['other'],
-                description: 'Une application permettant de présenter et organiser vos projets.',
-                updated: '2 minutes ago',
-                demoUrl: 'https://ericsotoca.github.io/playstore',
-                sourceUrl: 'https://ericsotoca.github.io/playstore',
-                icon: 'P'
-            },
-            {
-                id: 'larouedelivie',
-                name: 'La Roue de la Vie',
-                tech: ['html'],
-                description: 'Application web permettant de visualiser et équilibrer différents aspects de votre vie.',
-                updated: '9 hours ago',
-                demoUrl: 'https://ericsotoca.github.io/larouedelavie',
-                sourceUrl: 'https://ericsotoca.github.io/larouedelavie',
-                icon: 'R'
-            },
             {
                 id: 'siestefm',
                 name: 'Sieste FM',
                 tech: ['html'],
-                description: 'Une webradio dédiée à la relaxation et la méditation.',
-                updated: '10 hours ago',
+                category: 'musique',
+                description: 'Sieste FM est une webradio conçue pour favoriser la relaxation et la méditation. Elle propose une sélection de musiques apaisantes, telles que "Blues in the Light of Dawn", pour créer une ambiance propice au repos. L\'application inclut des options de minuterie (10, 15, 30 minutes ou illimité) pour programmer une sieste, ainsi qu\'une fonction d\'alarme musicale pour un réveil en douceur. Parfaite pour une pause détente à tout moment de la journée.',
+                updated: 'Il y a 10 heures', // Format plus lisible
                 demoUrl: 'https://ericsotoca.github.io/SiesteFM',
-                sourceUrl: 'https://ericsotoca.github.io/SiesteFM',
-                icon: 'S'
+                sourceUrl: 'https://ericsotoca.github.io/SiesteFM', // Gardé pour référence future
+                image: 'images/siestefm.png',
+                license: null // Ajouté pour correspondre à la logique JS
             },
             {
-                id: 'webradio',
-                name: 'Web Radio',
+                id: 'sotocawebradio',
+                name: 'SOTOCA WebRadio',
                 tech: ['javascript'],
-                description: 'Application de webradio personnalisable avec différentes stations.',
-                updated: '20 hours ago',
+                category: 'musique',
+                description: 'SOTOCA WebRadio est une application de webradio personnalisable qui offre une large variété de stations pour répondre à tous les goûts musicaux. Que vous préfériez des sons calmes et puissants, des rythmes entraînants ou des mélodies spirituelles comme "Maylo" par Jensetis der Grenzen, cette webradio vous permet de choisir parmi des catégories telles que "Horizon Infini", "Calme Puissant", "Esprit Aiguisé", et "Quête Sauvage". Une expérience musicale immersive pour toutes les humeurs.',
+                updated: 'Il y a 20 heures',
                 demoUrl: 'https://ericsotoca.github.io/webradio',
                 sourceUrl: 'https://ericsotoca.github.io/webradio',
-                icon: 'W'
+                image: 'images/sotocawebradio.png',
+                license: null
             },
             {
-                id: 'awale',
-                name: 'Awalé',
+                id: 'larouedelavie',
+                name: 'La Roue de la Vie',
+                tech: ['javascript'],
+                category: 'developpement',
+                description: 'La Roue de la Vie est un outil interactif conçu pour vous aider à évaluer et équilibrer les différents aspects de votre vie personnelle. À travers une interface intuitive, vous pouvez noter des domaines clés tels que la santé physique, le mental, et d\'autres aspects de votre bien-être sur une échelle de 1 à 10. L\'application génère une visualisation graphique sous forme de roue, vous permettant d\'identifier les déséquilibres et de définir des objectifs pour améliorer votre épanouissement global.',
+                updated: 'Il y a 20 heures',
+                demoUrl: 'https://ericsotoca.github.io/larouedelavie',
+                sourceUrl: 'https://ericsotoca.github.io/larouedelavie',
+                image: 'images/larouedelavie.png',
+                license: null
+            },
+            {
+                id: 'danslatetedunchampion',
+                name: 'Dans la Tête d\'un Champion',
                 tech: ['html'],
-                license: 'MIT License',
-                description: 'Implémentation du jeu traditionnel africain Awalé.',
-                updated: '4 days ago',
-                demoUrl: 'https://ericsotoca.github.io/awale',
+                category: 'jeux',
+                description: 'Dans la Tête d\'un Champion est un jeu de réflexion et de stratégie qui met à l\'épreuve vos compétences cognitives et tactiques. Inspiré des jeux télévisés, il propose des défis où vous devez sélectionner et placer des réponses dans une grille pour accumuler des points. Avec des options de mise (75% ou 100% des gains), des statistiques de réussite (par exemple, 89%), et des historiques de parties, ce jeu offre une expérience immersive pour les amateurs de quiz et de challenges intellectuels.',
+                updated: 'Il y a 4 jours',
+                demoUrl: 'https://ericsotoca.github.io/awale', // Note: L'URL pointe vers /awale, est-ce correct ?
                 sourceUrl: 'https://ericsotoca.github.io/awale',
-                icon: 'A'
+                image: 'images/danslatetedunchampion.png',
+                license: null
             }
+            // Ajouter d'autres applications ici
         ];
 
-        // Generate app cards
+        // --- Éléments du DOM ---
+        const appsGrid = document.getElementById('appsGrid');
+        const searchInput = document.getElementById('searchInput');
+        const categoryButtons = document.querySelectorAll('.category');
+        const homeLink = document.getElementById('homeLink');
+        const modal = document.getElementById('appModal');
+        const closeModalBtn = document.getElementById('closeModal');
+        const modalIcon = document.getElementById('modalIcon');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalTechTags = document.getElementById('modalTechTags');
+        const modalDescription = document.getElementById('modalDescription');
+        const startAppBtn = document.getElementById('startAppBtn');
+        const copyrightYearSpan = document.getElementById('copyright-year');
+
+        // --- Fonctions ---
+
+        // Génère les cartes d'application dans la grille
         function generateAppCards(appsToShow) {
-            const appsGrid = document.getElementById('appsGrid');
-            appsGrid.innerHTML = '';
-            
+            appsGrid.innerHTML = ''; // Vide la grille
+            if (appsToShow.length === 0) {
+                 appsGrid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; color: #777;">Aucune application trouvée.</p>';
+                 return;
+            }
+
             appsToShow.forEach(app => {
                 const appCard = document.createElement('div');
                 appCard.className = 'app-card';
-                appCard.dataset.id = app.id;
-                
-                let techTags = '';
-                app.tech.forEach(tech => {
+                appCard.dataset.id = app.id; // Utiliser data-id pour référence potentielle
+
+                // Crée les tags de technologie
+                let techTagsHTML = app.tech.map(tech => {
                     let techClass = '';
                     let techName = '';
-                    
-                    if (tech === 'html') {
-                        techClass = 'tech-html';
-                        techName = 'HTML';
-                    } else if (tech === 'javascript') {
-                        techClass = 'tech-js';
-                        techName = 'JavaScript';
-                    } else {
-                        techName = 'Other';
+                    switch (tech.toLowerCase()) {
+                        case 'html': techClass = 'tech-html'; techName = 'HTML'; break;
+                        case 'javascript': case 'js': techClass = 'tech-js'; techName = 'JavaScript'; break;
+                        // Ajouter d'autres cas si nécessaire (css, python, etc.)
+                        default: techClass = ''; techName = tech; // Affiche le nom tel quel
                     }
-                    
-                    techTags += `<span class="tech-tag ${techClass}">${techName}</span>`;
-                });
-                
-                let licenseTag = app.license ? 
+                    return `<span class="tech-tag ${techClass}">${techName}</span>`;
+                }).join(''); // Joint les spans HTML en une seule chaîne
+
+                // Crée le tag de licence s'il existe
+                let licenseTagHTML = app.license ?
                     `<span class="license-tag">${app.license}</span>` : '';
-                
+
+                // Tronque la description pour la carte
+                const shortDescription = app.description.length > 90 ?
+                    app.description.substring(0, 90) + '...' :
+                    app.description;
+
+                // Remplit la carte avec du HTML
                 appCard.innerHTML = `
                     <div class="app-icon">
-                        <div class="icon-placeholder">${app.icon}</div>
+                        <img src="${app.image}" alt="Icône ${app.name}" loading="lazy"> <!-- Ajout loading="lazy" -->
                     </div>
                     <div class="app-info">
                         <div class="app-name">${app.name}</div>
                         <div class="app-meta">
-                            ${techTags}
-                            ${licenseTag}
+                            ${techTagsHTML}
+                            ${licenseTagHTML}
                         </div>
-                        <div class="app-description">${app.description.substring(0, 80)}${app.description.length > 80 ? '...' : ''}</div>
-                        <div class="update-info">Updated ${app.updated}</div>
+                        <div class="app-description">${shortDescription}</div>
+                        <div class="update-info">Mis à jour ${app.updated}</div>
                     </div>
                 `;
-                
+
+                // Ajoute un écouteur pour ouvrir la modale au clic
                 appCard.addEventListener('click', () => openAppModal(app));
                 appsGrid.appendChild(appCard);
             });
         }
 
-        // Filter apps by category
+        // Filtre les applications par catégorie
         function filterAppsByCategory(category) {
             if (category === 'all') {
-                return apps;
+                return apps; // Retourne toutes les apps
             } else {
-                return apps.filter(app => app.tech.includes(category));
+                return apps.filter(app => app.category === category);
             }
         }
 
-        // Filter apps by search term
+        // Filtre les applications par terme de recherche (nom ou description)
         function filterAppsBySearch(term) {
-            term = term.toLowerCase();
-            return apps.filter(app => 
-                app.name.toLowerCase().includes(term) ||
-                app.description.toLowerCase().includes(term)
+            const lowerCaseTerm = term.toLowerCase().trim();
+            if (!lowerCaseTerm) {
+                 return apps; // Retourne toutes les apps si la recherche est vide
+            }
+            return apps.filter(app =>
+                app.name.toLowerCase().includes(lowerCaseTerm) ||
+                app.description.toLowerCase().includes(lowerCaseTerm) ||
+                app.tech.some(tech => tech.toLowerCase().includes(lowerCaseTerm)) // Recherche aussi dans les technos
             );
         }
 
-        // Initialize category filtering
-        document.querySelectorAll('.category').forEach(categoryBtn => {
-            categoryBtn.addEventListener('click', () => {
-                // Update active state
-                document.querySelector('.category.active').classList.remove('active');
-                categoryBtn.classList.add('active');
-                
-                // Filter apps
-                const category = categoryBtn.dataset.category;
-                const filteredApps = filterAppsByCategory(category);
-                generateAppCards(filteredApps);
-            });
-        });
-
-        // Initialize search functionality
-        const searchInput = document.getElementById('searchInput');
-        searchInput.addEventListener('input', () => {
-            const searchTerm = searchInput.value;
-            const filteredApps = filterAppsBySearch(searchTerm);
-            generateAppCards(filteredApps);
-        });
-
-        // Modal functionality
-        const modal = document.getElementById('appModal');
-        const closeModal = document.getElementById('closeModal');
-
+        // Ouvre la modale avec les détails d'une application spécifique
         function openAppModal(app) {
-            document.getElementById('modalIcon').textContent = app.icon;
-            document.getElementById('modalTitle').textContent = app.name;
-            
-            const modalTechTags = document.getElementById('modalTechTags');
-            modalTechTags.innerHTML = '';
-            
-            app.tech.forEach(tech => {
-                let techClass = '';
-                let techName = '';
-                
-                if (tech === 'html') {
-                    techClass = 'tech-html';
-                    techName = 'HTML';
-                } else if (tech === 'javascript') {
-                    techClass = 'tech-js';
-                    techName = 'JavaScript';
-                } else {
-                    techName = 'Other';
-                }
-                
-                const techTag = document.createElement('span');
-                techTag.className = `tech-tag ${techClass}`;
-                techTag.textContent = techName;
-                modalTechTags.appendChild(techTag);
-            });
-            
+            modalIcon.innerHTML = `<img src="${app.image}" alt="Icône ${app.name}">`;
+            modalTitle.textContent = app.name;
+            modalDescription.textContent = app.description;
+            startAppBtn.href = app.demoUrl;
+
+            // Génère les tags techniques pour la modale
+            modalTechTags.innerHTML = app.tech.map(tech => {
+                 let techClass = '';
+                 let techName = '';
+                 switch (tech.toLowerCase()) {
+                    case 'html': techClass = 'tech-html'; techName = 'HTML'; break;
+                    case 'javascript': case 'js': techClass = 'tech-js'; techName = 'JavaScript'; break;
+                    default: techClass = ''; techName = tech;
+                 }
+                return `<span class="tech-tag ${techClass}">${techName}</span>`;
+            }).join('');
+
+            // Ajoute le tag de licence dans la modale s'il existe
             if (app.license) {
                 const licenseTag = document.createElement('span');
                 licenseTag.className = 'license-tag';
                 licenseTag.textContent = app.license;
-                modalTechTags.appendChild(licenseTag);
+                modalTechTags.appendChild(licenseTag); // Ajoute comme élément séparé
             }
-            
-            document.getElementById('modalDescription').textContent = app.description;
-            document.getElementById('viewDemoBtn').href = app.demoUrl;
-            document.getElementById('viewSourceBtn').href = app.sourceUrl;
-            
-            modal.style.display = 'block';
+
+            modal.classList.add('show'); // Affiche la modale
+            document.body.style.overflow = 'hidden'; // Empêche le défilement du body derrière
         }
 
-        closeModal.addEventListener('click', () => {
-            modal.style.display = 'none';
+        // Ferme la modale
+        function closeAppModal() {
+            modal.classList.remove('show');
+            document.body.style.overflow = ''; // Restaure le défilement du body
+        }
+
+        // Met à jour l'année du copyright
+        function updateCopyrightYear() {
+            if (copyrightYearSpan) {
+                copyrightYearSpan.textContent = new Date().getFullYear();
+            }
+        }
+
+        // --- Écouteurs d'Événements ---
+
+        // Clic sur les boutons de catégorie
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Désactive l'ancien bouton actif
+                document.querySelector('.category.active').classList.remove('active');
+                // Active le bouton cliqué
+                button.classList.add('active');
+
+                const selectedCategory = button.dataset.category;
+                searchInput.value = ''; // Réinitialise la recherche en changeant de catégorie
+                const filteredApps = filterAppsByCategory(selectedCategory);
+                generateAppCards(filteredApps);
+            });
         });
 
-        window.addEventListener('click', (event) => {
+        // Clic sur le logo/titre pour revenir à l'accueil
+        homeLink.addEventListener('click', () => {
+            // Réinitialise la catégorie active à "Tous"
+            document.querySelector('.category.active').classList.remove('active');
+            document.querySelector('.category[data-category="all"]').classList.add('active');
+            // Vide la barre de recherche
+            searchInput.value = '';
+            // Affiche toutes les applications
+            generateAppCards(apps);
+        });
+
+        // Saisie dans la barre de recherche (avec un petit délai pour éviter trop d'appels)
+        let searchTimeout;
+        searchInput.addEventListener('input', () => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                const searchTerm = searchInput.value;
+                 // Réinitialise la catégorie active à "Tous" lors de la recherche
+                 document.querySelector('.category.active').classList.remove('active');
+                 document.querySelector('.category[data-category="all"]').classList.add('active');
+                 const filteredApps = filterAppsBySearch(searchTerm);
+                generateAppCards(filteredApps);
+            }, 250); // Délai de 250ms
+        });
+
+        // Fermeture de la modale
+        closeModalBtn.addEventListener('click', closeAppModal);
+        modal.addEventListener('click', (event) => {
+            // Ferme si on clique sur le fond de la modale (l'overlay)
             if (event.target === modal) {
-                modal.style.display = 'none';
+                closeAppModal();
+            }
+        });
+        // Fermeture avec la touche Echap
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && modal.classList.contains('show')) {
+                closeAppModal();
             }
         });
 
-        // Initialize app display
-        generateAppCards(apps);
+
+        // --- Initialisation ---
+        updateCopyrightYear(); // Met à jour l'année du footer
+        generateAppCards(apps); // Affiche toutes les applications au chargement
+
     </script>
 </body>
 </html>
