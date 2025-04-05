@@ -13,6 +13,7 @@
             --bg-light: #f8f9fa;
             --card-shadow: 0 2px 5px rgba(0,0,0,0.1);
             --card-hover-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            --category-tag-bg: #e0e0e0;
         }
 
         /* --- Styles Généraux --- */
@@ -24,483 +25,174 @@
             background-color: var(--bg-light);
             line-height: 1.6;
         }
+        body.modal-open {
+             overflow: hidden; /* Empêche le scroll du body quand la modale est ouverte */
+         }
 
         /* --- Header --- */
-        header {
-            background-color: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            padding: 1rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 1px solid #eee;
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            cursor: pointer;
-            text-decoration: none;
-        }
-
-        .search-bar {
-            flex-grow: 1;
-            margin: 0 2rem;
-            position: relative;
-        }
-
-        .search-bar input {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border-radius: 24px;
-            border: 1px solid #ddd;
-            font-size: 1rem;
-            box-sizing: border-box;
-        }
+        header { background-color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 1rem; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #eee; }
+        .header-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary-color); cursor: pointer; text-decoration: none; }
+        .search-bar { flex-grow: 1; margin: 0 2rem; position: relative; }
+        .search-bar input { width: 100%; padding: 0.75rem 1rem; border-radius: 24px; border: 1px solid #ddd; font-size: 1rem; box-sizing: border-box; }
 
         /* --- Main Content --- */
-        main {
-            max-width: 1200px;
-            margin: 1.5rem auto;
-            padding: 1rem;
-        }
-
-        /* --- Catégories --- */
-        .categories {
-            display: flex;
-            overflow-x: auto;
-            gap: 1rem;
-            padding-bottom: 0.5rem;
-            margin-bottom: 1.5rem;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .category {
-            padding: 0.5rem 1rem;
-            background-color: white;
-            border-radius: 20px;
-            white-space: nowrap;
-            cursor: pointer;
-            border: 1px solid #ddd;
-            transition: background-color 0.2s, color 0.2s, border-color 0.2s;
-            font-size: 0.9rem;
-        }
-
-        .category:hover {
-            background-color: #f0f0f0;
-        }
-
-        .category.active {
-            background-color: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
-        }
+        main { max-width: 1200px; margin: 1.5rem auto; padding: 1rem; }
+        .categories { display: flex; overflow-x: auto; gap: 1rem; padding-bottom: 0.5rem; margin-bottom: 1.5rem; -webkit-overflow-scrolling: touch; }
+        .category { padding: 0.5rem 1rem; background-color: white; border-radius: 20px; white-space: nowrap; cursor: pointer; border: 1px solid #ddd; transition: background-color 0.2s, color 0.2s, border-color 0.2s; font-size: 0.9rem; }
+        .category:hover { background-color: #f0f0f0; }
+        .category.active { background-color: var(--primary-color); color: white; border-color: var(--primary-color); }
 
         /* --- Grille d'Applications --- */
-        .apps-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
+        .apps-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
 
         /* --- Carte d'Application --- */
-        .app-card {
-            background-color: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: var(--card-shadow);
-            transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .app-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--card-hover-shadow);
-        }
-
-        .app-icon {
-            height: 150px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #e9f0fe;
-            overflow: hidden;
-            flex-shrink: 0;
-        }
-
-        .app-icon img {
-            max-width: 80%;
-            max-height: 80%;
-            object-fit: contain;
-            object-position: center;
-        }
-
-        .app-info {
-            padding: 1rem;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-
-        .app-name {
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-            color: var(--text-color);
-        }
-
-        .app-meta {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 0.75rem;
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        .tech-tag, .license-tag {
-            padding: 0.25rem 0.6rem;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            line-height: 1.2;
-        }
-
-        .tech-tag {
-            background-color: #f0f0f0;
-        }
-
+        .app-card { background-color: white; border-radius: 8px; overflow: hidden; box-shadow: var(--card-shadow); transition: transform 0.2s ease-out, box-shadow 0.2s ease-out; cursor: pointer; display: flex; flex-direction: column; }
+        .app-card:hover { transform: translateY(-5px); box-shadow: var(--card-hover-shadow); }
+        .app-icon { height: 150px; display: flex; align-items: center; justify-content: center; background-color: #e9f0fe; overflow: hidden; flex-shrink: 0; }
+        .app-icon img { max-width: 80%; max-height: 80%; object-fit: contain; object-position: center; }
+        .app-info { padding: 1rem; display: flex; flex-direction: column; flex-grow: 1; }
+        .app-name { font-weight: bold; margin-bottom: 0.5rem; font-size: 1.1rem; color: var(--text-color); }
+        .app-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.75rem; font-size: 0.9rem; color: #666; }
+        .tech-tag, .license-tag { padding: 0.25rem 0.6rem; border-radius: 12px; font-size: 0.75rem; line-height: 1.2; }
+        .tech-tag { background-color: #f0f0f0; }
         .tech-html { background-color: #e34c26; color: white; }
         .tech-js { background-color: #f7df1e; color: black; }
-
-        .license-tag {
-            background-color: #e0e0e0;
-            margin-left: auto;
-        }
-
-        .app-description {
-            color: #555;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-            flex-grow: 1;
-        }
-
-        .update-info {
-            font-size: 0.8rem;
-            color: #999;
-            margin-top: auto;
-            padding-top: 0.5rem;
-        }
+        .license-tag { background-color: #e0e0e0; margin-left: auto; }
+        .app-description { color: #555; font-size: 0.9rem; margin-bottom: 1rem; flex-grow: 1; }
+        .update-info { font-size: 0.8rem; color: #999; margin-top: auto; padding-top: 0.5rem; }
 
         /* --- Modale --- */
         .modal {
-            display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.6);
+            background-color: rgba(0,0,0,0.65);
             z-index: 1000;
+            display: flex;
             justify-content: center;
             align-items: center;
             padding: 1rem;
             box-sizing: border-box;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0s linear 0.3s; /* Hide visibility after fade */
         }
-
         .modal.show {
-            display: flex;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.3s ease, visibility 0s linear 0s; /* Show visibility instantly */
         }
 
         .modal-content {
             position: relative;
-            background: linear-gradient(135deg, #ffffff, #f0f4ff);
-            border-radius: 12px;
-            max-width: 850px; /* Augmenté pour la mise en page 2 colonnes */
+            background: #fff;
+            border-radius: 10px;
+            max-width: 850px;
             width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-            padding: 2rem;
-            animation: fadeInScale 0.3s ease-out;
+            max-height: 90vh; /* Hauteur max globale */
+            overflow: hidden; /* Important */
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            padding: 0;
+            display: flex;
+            flex-direction: row;
+            opacity: 0; /* For animation */
+            transform: scale(0.95); /* For animation */
+            transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s; /* Delay animation slightly */
+        }
+        .modal.show .modal-content {
+             opacity: 1;
+             transform: scale(1);
         }
 
-        @keyframes fadeInScale {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        .close-modal {
+        .close-modal { /* Bouton X */
             position: absolute;
-            top: 15px;
+            top: 10px;
             right: 15px;
             font-size: 1.8rem;
             line-height: 1;
             cursor: pointer;
-            color: #888;
+            color: #aaa;
             transition: color 0.2s, transform 0.2s;
-            z-index: 10; /* Assure qu'il est au-dessus du contenu */
+            z-index: 1012;
         }
+        .close-modal:hover { color: #555; transform: scale(1.1); }
 
-        .close-modal:hover {
-            color: var(--primary-color);
-            transform: scale(1.1);
-        }
-
-        .modal-header {
+        /* --- Structure Colonnes Modale --- */
+        .modal-column-left {
+            flex: 1;
+            min-width: 0;
+            padding: 2rem 1.5rem 2rem 2rem;
             display: flex;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #eee;
-            gap: 1.5rem;
+            flex-direction: column;
+            overflow-y: auto; /* Scroll interne */
+            max-height: 90vh; /* Doit correspondre à modal-content */
+            box-sizing: border-box;
         }
+        .modal-left-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; flex-shrink: 0; }
+        .modal-icon { width: 55px; height: 55px; border-radius: 10px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 1px solid #eee; background-color: #f8f8f8; }
+        .modal-icon img { max-width: 85%; max-height: 85%; object-fit: contain; }
+        .modal-left-title-area { flex-grow: 1; }
+        #modalTitle { margin: 0 0 0.2rem 0; font-size: 1.5rem; color: var(--text-color); line-height: 1.3; font-weight: 600; }
+        #modalCategory { font-size: 0.85rem; color: #555; background-color: var(--category-tag-bg); padding: 0.2rem 0.6rem; border-radius: 12px; display: inline-block; }
+        #modalDescription { line-height: 1.65; color: #555; font-size: 0.95rem; margin-bottom: 1.5rem; flex-grow: 1; /* Important pour pousser les boutons */ }
+        .modal-left-actions { margin-top: auto; padding-top: 1rem; flex-shrink: 0; display: flex; flex-direction: column; gap: 0.8rem; align-items: center; /* Centre les boutons */ }
 
-        .modal-icon {
-            width: 60px; /* Peut-être réduire un peu l'icône */
-            height: 60px;
-            border-radius: 12px;
-            flex-shrink: 0;
+        #closeModalBtnBottom { background-color: transparent; border: 1px solid #ccc; color: #777; padding: 0.5rem 1.5rem; border-radius: 20px; font-size: 0.9rem; cursor: pointer; transition: background-color 0.2s, color 0.2s, border-color 0.2s; text-decoration: none; text-align: center; }
+        #closeModalBtnBottom:hover { background-color: #f0f0f0; border-color: #aaa; color: #333; }
+
+        .modal-column-right {
+            flex: 0 0 45%;
+            background-color: #f4f5f7;
+            overflow: hidden;
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
-            border: 1px solid #ddd; /* Bordure plus légère */
-            background-color: #fff;
         }
+        .modal-column-right.hidden { display: none; }
+        #modalImagePreviewContainer { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 1rem; box-sizing: border-box; }
+        #modalImagePreview { display: block; max-width: 100%; max-height: 100%; height: auto; width: auto; object-fit: contain; border-radius: 6px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
 
-        .modal-icon img {
-            max-width: 90%; /* Ajustement taille interne */
-            max-height: 90%;
-            object-fit: contain;
-            object-position: center;
-        }
-
-        .modal-app-info {
-            flex-grow: 1;
-        }
-
-        .modal-app-info h2 {
-            margin: 0 0 0.3rem 0; /* Moins d'espace sous le titre */
-            font-size: 1.6rem; /* Titre légèrement réduit */
-            color: var(--primary-color);
-            line-height: 1.3;
-        }
-
-        .modal-tech-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 0; /* Pas de marge en bas ici */
-        }
-        .modal-tech-tags .tech-tag, .modal-tech-tags .license-tag {
-             padding: 0.25rem 0.6rem;
-             border-radius: 12px;
-             font-size: 0.8rem;
-             line-height: 1.2;
-        }
-        .modal-tech-tags .license-tag { margin-left: 0; }
-
-
-        /* --- NOUVEAU: Conteneur pour les colonnes --- */
-        .modal-body-columns {
-            display: flex;
-            gap: 2rem; /* Espace entre les colonnes */
-            margin-bottom: 2rem; /* Espace avant les boutons d'action */
-            align-items: flex-start; /* Aligner le haut des colonnes */
-        }
-
-        /* --- Colonne Image (Ancien .modal-preview-image) --- */
-        .modal-column-image {
-            flex: 0 0 40%; /* Ne grandit pas, ne rétrécit pas, base de 40% */
-            /* Ou utiliser une largeur fixe : */
-            /* flex: 0 0 300px; */
-            /* max-width: 350px; */ /* Limite optionnelle */
-            background-color: #f0f0f0;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        .modal-column-image.hidden { /* Pour cacher si pas d'image */
-            display: none;
-        }
-        #modalImagePreview {
-            display: block;
-            width: 100%; /* Prend toute la largeur de sa colonne */
-            height: auto; /* Maintient les proportions */
-            /* max-height: none; */ /* On enlève la limite de hauteur ici */
-            object-fit: contain; /* Ou 'cover' */
-            object-position: center top; /* Aligner en haut si contain */
-            border-radius: 6px;
-        }
-
-        /* --- Colonne Texte --- */
-        .modal-column-text {
-            flex: 1; /* Prend l'espace restant */
-            min-width: 0; /* Important pour flexbox pour permettre le wrapping du texte */
-        }
-        .modal-description {
-            line-height: 1.7;
-            margin-bottom: 0; /* Plus besoin de marge ici */
-            color: #444;
-            font-size: 0.95rem; /* Texte légèrement plus petit */
-        }
-        /* FIN NOUVEAU Layout colonnes */
-
-
-        .modal-actions {
-            display: flex;
-            justify-content: center;
-            margin-top: 1rem; /* Garder ou ajuster */
-        }
-
-        /* --- Boutons --- */
-        .btn {
-            display: inline-block;
-            padding: 0.75rem 2rem;
-            border-radius: 25px;
-            border: none;
-            cursor: pointer;
-            font-weight: 500;
-            font-size: 1rem;
-            transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
-            text-decoration: none;
-            text-align: center;
-        }
-
-        .btn-primary {
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            box-shadow: 0 2px 5px rgba(0, 100, 255, 0.3);
-        }
-
-        .btn-primary:hover, .btn-primary:focus {
-            background: linear-gradient(45deg, #3367d6, #2e8b43);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0, 100, 255, 0.4);
-            outline: none;
-        }
+        /* --- Boutons (général) --- */
+        .btn { display: inline-block; padding: 0.75rem 2rem; border-radius: 25px; border: none; cursor: pointer; font-weight: 500; font-size: 1rem; transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s; text-decoration: none; text-align: center; }
+        .btn-primary { background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); color: white; box-shadow: 0 2px 5px rgba(0, 100, 255, 0.3); }
+        .btn-primary:hover, .btn-primary:focus { background: linear-gradient(45deg, #3367d6, #2e8b43); transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 100, 255, 0.4); outline: none; }
 
         /* --- Footer --- */
-        footer {
-            text-align: center;
-            padding: 2rem 1rem;
-            background-color: white;
-            margin-top: 2rem;
-            border-top: 1px solid #eee;
-            font-size: 0.9rem;
-            color: #666;
-        }
+        footer { text-align: center; padding: 2rem 1rem; background-color: white; margin-top: 2rem; border-top: 1px solid #eee; font-size: 0.9rem; color: #666; }
 
         /* --- Responsive --- */
-        /* Tablette et en dessous */
         @media (max-width: 768px) {
-            .modal-content {
-                 max-width: 600px; /* Réduit un peu la largeur max */
-                 padding: 1.5rem;
-             }
-
-            .modal-header {
-                /* Garder la disposition flexible par défaut ici */
-                /* Si besoin d'empiler sur tablette, décommenter : */
-                /* flex-direction: column; */
-                /* align-items: flex-start; */
-                 gap: 1rem;
-                 margin-bottom: 1.5rem; /* Rétablir la marge */
-                 padding-bottom: 1rem;
-                 border-bottom: 1px solid #eee; /* Rétablir la bordure */
-            }
-
-            .modal-icon { /* Ajustements si header empilé */
-                 /* width: 60px; */
-                 /* height: 60px; */
-            }
-
-            .modal-app-info h2 {
-                 font-size: 1.5rem;
-             }
-
-            /* --- NOUVEAU: Empiler les colonnes --- */
-            .modal-body-columns {
-                flex-direction: column; /* Empile l'image et le texte */
-                gap: 1.5rem; /* Espace entre image et texte */
-                margin-bottom: 1.5rem;
-            }
-
-            .modal-column-image {
-                flex-basis: auto; /* Annule la base de 40% */
-                width: 100%; /* Prend toute la largeur */
-            }
-
-            .modal-column-text {
-                 width: 100%; /* Prend toute la largeur */
-             }
-            #modalImagePreview {
-                 max-height: 50vh; /* Limite hauteur sur mobile */
-             }
-
-            .modal-description {
-                 font-size: 0.9rem;
-             }
-
-             .btn {
-                 padding: 0.7rem 1.5rem;
-                 font-size: 0.95rem;
-             }
+            .modal-content { flex-direction: column; max-width: 500px; max-height: 85vh; overflow-y: auto; /* Scroll principal ici */ overflow-x: hidden; }
+            .modal-column-left, .modal-column-right { max-height: none; overflow-y: visible; } /* Annule scroll interne */
+            .modal-column-left { padding: 1.5rem; order: 2; } /* Texte après */
+            .modal-left-actions { margin-top: 1.5rem; } /* Espace normal */
+            .modal-column-right { order: 1; flex-basis: auto; width: 100%; min-height: 250px; max-height: 45vh; background-color: #e9edf0; }
+            #modalImagePreviewContainer { padding: 0.5rem; }
+            .modal-icon { width: 45px; height: 45px; } #modalTitle { font-size: 1.3rem; } #modalCategory { font-size: 0.8rem; } #modalDescription { font-size: 0.9rem; }
+            #startAppBtn { font-size: 0.95rem; padding: 0.6rem 1.5rem; } #closeModalBtnBottom { font-size: 0.85rem; padding: 0.4rem 1.2rem; }
         }
-
-        /* Mobile petit */
          @media (max-width: 480px) {
-             .header-content {
-                 flex-direction: column;
-                 align-items: flex-start;
-                 gap: 0.5rem;
-             }
-             .search-bar {
-                 width: 100%;
-                 margin: 0.5rem 0 0 0;
-             }
-             .apps-grid {
-                 grid-template-columns: 1fr;
-                 gap: 1rem;
-             }
-             .logo { font-size: 1.3rem; }
-             .search-bar input { font-size: 0.9rem; }
-             .category { font-size: 0.85rem; padding: 0.4rem 0.8rem; }
+              /* Header/Main adjustments (optional) */
+             .header-content { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+             .search-bar { width: 100%; margin: 0.5rem 0 0 0; }
+             .apps-grid { grid-template-columns: 1fr; gap: 1rem; }
+             .logo { font-size: 1.3rem; } .search-bar input { font-size: 0.9rem; } .category { font-size: 0.85rem; padding: 0.4rem 0.8rem; }
 
-             .modal-content { padding: 1rem; }
-             .modal-header { gap: 0.8rem; }
-             .modal-icon { width: 50px; height: 50px;}
-             .modal-app-info h2 { font-size: 1.4rem; }
-             .modal-body-columns { gap: 1rem; }
-             #modalImagePreview { max-height: 40vh; }
-             .modal-description { font-size: 0.85rem; }
-
-         }
-         /* Styles pour les cartes */
-          @media (max-width: 768px) {
-             .apps-grid {
-                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-                 gap: 1rem;
-             }
-         }
-         @media (max-width: 480px) {
-             .apps-grid { grid-template-columns: 1fr; }
+             /* Modal adjustments */
+              .modal-content { max-width: 95%; }
+              .modal-column-left { padding: 1.2rem; }
+              .modal-column-right { min-height: 200px; }
+              #modalTitle { font-size: 1.2rem; }
          }
 
     </style>
 </head>
 <body>
+    <!-- Header -->
     <header>
         <div class="header-content">
             <div class="logo" id="homeLink" title="Retour à l'accueil">My App Store</div>
@@ -510,6 +202,7 @@
         </div>
     </header>
 
+    <!-- Main -->
     <main>
         <div class="categories">
             <div class="category active" data-category="all">Tous</div>
@@ -517,7 +210,6 @@
             <div class="category" data-category="developpement">Développement personnel</div>
             <div class="category" data-category="jeux">Jeux</div>
         </div>
-
         <div class="apps-grid" id="appsGrid">
             <!-- Cartes générées par JS -->
         </div>
@@ -527,41 +219,38 @@
     <div id="appModal" class="modal">
         <div class="modal-content">
             <span class="close-modal" id="closeModal" title="Fermer">×</span>
-            <div class="modal-header">
-                <div class="modal-icon" id="modalIcon"></div>
-                <div class="modal-app-info">
-                    <h2 id="modalTitle">Nom App</h2>
-                    <div class="modal-tech-tags" id="modalTechTags"></div>
+
+            <!-- Colonne Gauche: Infos + Actions -->
+            <div class="modal-column-left">
+                <div class="modal-left-header">
+                    <div class="modal-icon" id="modalIcon"></div>
+                    <div class="modal-left-title-area">
+                        <h2 id="modalTitle">Nom App</h2>
+                        <span id="modalCategory">Catégorie</span>
+                    </div>
+                </div>
+                <div class="modal-description" id="modalDescription">Description...</div>
+                <div class="modal-left-actions">
+                    <a id="startAppBtn" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Démarrer l'application</a>
+                    <button id="closeModalBtnBottom" class="btn">Fermer</button>
                 </div>
             </div>
 
-            <!-- NOUVEAU: Conteneur pour la disposition en colonnes -->
-            <div class="modal-body-columns">
-                <!-- Colonne 1: Image Preview -->
-                <div class="modal-column-image hidden" id="modalImagePreviewContainer">
-                    <img id="modalImagePreview" src="" alt="Aperçu" loading="lazy">
-                </div>
-                <!-- Colonne 2: Texte -->
-                <div class="modal-column-text">
-                    <div class="modal-description" id="modalDescription">Description...</div>
-                    <!-- On pourrait ajouter d'autres infos texte ici si besoin -->
-                </div>
-            </div>
-            <!-- FIN Conteneur colonnes -->
-
-            <div class="modal-actions">
-                <a id="startAppBtn" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Démarrer l'application</a>
+            <!-- Colonne Droite: Image Preview -->
+            <div class="modal-column-right hidden" id="modalImagePreviewContainer">
+                 <img id="modalImagePreview" src="" alt="Aperçu" loading="lazy">
             </div>
         </div>
     </div>
 
+    <!-- Footer -->
     <footer>
         © <span id="copyright-year"></span> My App Store - Tous droits réservés
     </footer>
 
     <script defer>
         // --- Données des Applications ---
-        const apps = [
+                const apps = [
              {
                 id: 'siestefm',
                 name: 'Sieste FM',
@@ -615,37 +304,51 @@
                 license: null
             }
         ];
-
         // --- Éléments du DOM ---
+        // On sélectionne les éléments ici pour être sûr qu'ils existent
+        // L'attribut `defer` garantit que le DOM est prêt
         const appsGrid = document.getElementById('appsGrid');
         const searchInput = document.getElementById('searchInput');
         const categoryButtons = document.querySelectorAll('.category');
         const homeLink = document.getElementById('homeLink');
         const modal = document.getElementById('appModal');
-        const closeModalBtn = document.getElementById('closeModal');
+        const closeModalBtn = document.getElementById('closeModal'); // X button
+        const copyrightYearSpan = document.getElementById('copyright-year');
+
+        // Éléments spécifiques à la modale (vérifier qu'ils sont bien trouvés)
+        const modalContent = modal ? modal.querySelector('.modal-content') : null;
         const modalIcon = document.getElementById('modalIcon');
         const modalTitle = document.getElementById('modalTitle');
-        const modalTechTags = document.getElementById('modalTechTags');
+        const modalCategory = document.getElementById('modalCategory');
         const modalDescription = document.getElementById('modalDescription');
         const startAppBtn = document.getElementById('startAppBtn');
-        const copyrightYearSpan = document.getElementById('copyright-year');
+        const closeModalBtnBottom = document.getElementById('closeModalBtnBottom'); // Bottom close button
         const modalImagePreview = document.getElementById('modalImagePreview');
-        const modalImagePreviewContainer = document.getElementById('modalImagePreviewContainer');
+        const modalImagePreviewContainer = document.getElementById('modalImagePreviewContainer'); // Right column
+        const modalColumnLeft = modal ? modal.querySelector('.modal-column-left') : null; // Pour scroll interne
 
-        // --- Fonctions --- (JavaScript reste identique à la version précédente)
+        // --- Fonctions ---
 
+        // Utilitaire (inchangé)
+        function capitalizeFirstLetter(string) {
+            if (!string) return '';
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
+        // generateAppCards (inchangé)
         function generateAppCards(appsToShow) {
+            if (!appsGrid) return; // Sécurité
             appsGrid.innerHTML = '';
-            if (appsToShow.length === 0) {
+            if (!appsToShow || appsToShow.length === 0) {
                  appsGrid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; color: #777;">Aucune application trouvée.</p>';
                  return;
             }
-            appsToShow.forEach(app => { /* ... (code inchangé) ... */
+            appsToShow.forEach(app => {
                  const appCard = document.createElement('div');
                 appCard.className = 'app-card';
                 appCard.dataset.id = app.id;
 
-                let techTagsHTML = app.tech.map(tech => {
+                let techTagsHTML = app.tech.map(tech => { /* ... */
                     let techClass = '', techName = '';
                     switch (tech.toLowerCase()) {
                         case 'html': techClass = 'tech-html'; techName = 'HTML'; break;
@@ -653,94 +356,123 @@
                         default: techClass = ''; techName = tech;
                     }
                     return `<span class="tech-tag ${techClass}">${techName}</span>`;
-                }).join('');
-
+                 }).join('');
                 let licenseTagHTML = app.license ? `<span class="license-tag">${app.license}</span>` : '';
                 const shortDescription = app.description.length > 90 ? app.description.substring(0, 90) + '...' : app.description;
 
                 appCard.innerHTML = `
-                    <div class="app-icon">
-                        <img src="${app.image}" alt="Icône ${app.name}" loading="lazy">
-                    </div>
+                    <div class="app-icon"><img src="${app.image}" alt="Icône ${app.name}" loading="lazy"></div>
                     <div class="app-info">
                         <div class="app-name">${app.name}</div>
-                        <div class="app-meta">
-                            ${techTagsHTML}
-                            ${licenseTagHTML}
-                        </div>
+                        <div class="app-meta">${techTagsHTML}${licenseTagHTML}</div>
                         <div class="app-description">${shortDescription}</div>
                         <div class="update-info">Mis à jour ${app.updated}</div>
-                    </div>
-                `;
+                    </div>`;
                 appCard.addEventListener('click', () => openAppModal(app));
                 appsGrid.appendChild(appCard);
             });
         }
+        // filterAppsByCategory (inchangé)
         function filterAppsByCategory(category) { return category === 'all' ? apps : apps.filter(app => app.category === category); }
+        // filterAppsBySearch (inchangé)
         function filterAppsBySearch(term) { const lowerCaseTerm = term.toLowerCase().trim(); if (!lowerCaseTerm) return apps; return apps.filter(app => app.name.toLowerCase().includes(lowerCaseTerm) || app.description.toLowerCase().includes(lowerCaseTerm) || app.tech.some(tech => tech.toLowerCase().includes(lowerCaseTerm))); }
 
+        // openAppModal (revu pour sécurité)
         function openAppModal(app) {
-            modalIcon.innerHTML = `<img src="${app.image}" alt="Icône ${app.name}">`;
-            modalTitle.textContent = app.name;
-            modalDescription.textContent = app.description;
-            startAppBtn.href = app.demoUrl;
+            if (!modal || !app) return; // Sécurité
 
-            modalTechTags.innerHTML = app.tech.map(tech => { /* ... (code inchangé) ... */
-                 let techClass = '', techName = '';
-                 switch (tech.toLowerCase()) {
-                    case 'html': techClass = 'tech-html'; techName = 'HTML'; break;
-                    case 'javascript': case 'js': techClass = 'tech-js'; techName = 'JavaScript'; break;
-                    default: techClass = ''; techName = tech;
-                 }
-                return `<span class="tech-tag ${techClass}">${techName}</span>`;
-            }).join('');
-            if (app.license) { const licenseTag = document.createElement('span'); licenseTag.className = 'license-tag'; licenseTag.textContent = app.license; modalTechTags.appendChild(licenseTag); }
+            // MAJ Colonne gauche (avec vérifs)
+            if (modalIcon) modalIcon.innerHTML = `<img src="${app.image || ''}" alt="Icône ${app.name || 'App'}">`;
+            if (modalTitle) modalTitle.textContent = app.name || 'Application';
+            if (modalCategory) modalCategory.textContent = capitalizeFirstLetter(app.category) || 'Divers';
+            if (modalDescription) modalDescription.textContent = app.description || 'Pas de description.';
+            if (startAppBtn) startAppBtn.href = app.demoUrl || '#';
 
-            if (app.previewImage && app.previewImage.trim() !== '') {
-                modalImagePreview.src = app.previewImage;
-                modalImagePreview.alt = `Aperçu de ${app.name}`;
-                modalImagePreviewContainer.classList.remove('hidden');
-            } else {
-                modalImagePreview.src = '';
-                modalImagePreview.alt = '';
-                modalImagePreviewContainer.classList.add('hidden');
+            // MAJ Colonne droite (Image Preview)
+            if (modalImagePreviewContainer && modalImagePreview) {
+                if (app.previewImage && app.previewImage.trim() !== '') {
+                    modalImagePreview.src = app.previewImage;
+                    modalImagePreview.alt = `Aperçu de ${app.name || 'App'}`;
+                    modalImagePreviewContainer.classList.remove('hidden');
+                } else {
+                    modalImagePreview.src = '';
+                    modalImagePreview.alt = '';
+                    modalImagePreviewContainer.classList.add('hidden');
+                }
             }
+
             modal.classList.add('show');
-            document.body.style.overflow = 'hidden';
-            // Faire défiler la modale vers le haut lors de l'ouverture
-            modal.querySelector('.modal-content').scrollTop = 0;
+            document.body.classList.add('modal-open'); // Bloque scroll body via CSS
+
+            // Reset scroll colonne gauche
+            if (modalColumnLeft) {
+                modalColumnLeft.scrollTop = 0;
+            }
         }
 
+        // closeAppModal (revu pour sécurité)
         function closeAppModal() {
+             if (!modal) return;
             modal.classList.remove('show');
-            document.body.style.overflow = '';
-             modalImagePreview.src = '';
-             modalImagePreviewContainer.classList.add('hidden');
+            document.body.classList.remove('modal-open'); // Libère scroll body
+
+            // Optionnel: Reset image
+            if (modalImagePreview) modalImagePreview.src = '';
+            if (modalImagePreviewContainer) modalImagePreviewContainer.classList.add('hidden');
         }
+
+        // updateCopyrightYear (inchangé)
         function updateCopyrightYear() { if (copyrightYearSpan) { copyrightYearSpan.textContent = new Date().getFullYear(); } }
 
-        // --- Écouteurs d'Événements --- (JavaScript reste identique à la version précédente)
-        categoryButtons.forEach(button => { button.addEventListener('click', () => { /* ... (code inchangé) ... */
-             document.querySelector('.category.active').classList.remove('active');
-            button.classList.add('active');
-            const selectedCategory = button.dataset.category;
-            searchInput.value = '';
-            generateAppCards(filterAppsByCategory(selectedCategory));
-        }); });
-        homeLink.addEventListener('click', () => { /* ... (code inchangé) ... */
-             document.querySelector('.category.active').classList.remove('active');
-            document.querySelector('.category[data-category="all"]').classList.add('active');
-            searchInput.value = '';
-            generateAppCards(apps);
-        });
-        let searchTimeout; searchInput.addEventListener('input', () => { clearTimeout(searchTimeout); searchTimeout = setTimeout(() => { const searchTerm = searchInput.value; document.querySelector('.category.active')?.classList.remove('active'); document.querySelector('.category[data-category="all"]')?.classList.add('active'); generateAppCards(filterAppsBySearch(searchTerm)); }, 250); });
-        closeModalBtn.addEventListener('click', closeAppModal);
-        modal.addEventListener('click', (event) => { if (event.target === modal) closeAppModal(); });
-        document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && modal.classList.contains('show')) closeAppModal(); });
+        // --- Initialisation & Écouteurs d'Événements ---
+        // Vérifier que les éléments existent avant d'ajouter des écouteurs
 
-        // --- Initialisation ---
+        if (appsGrid) {
+            generateAppCards(apps); // Affichage initial
+        } else {
+            console.error("Erreur: Élément #appsGrid non trouvé.");
+        }
+
+        if (categoryButtons) {
+            categoryButtons.forEach(button => { button.addEventListener('click', () => { /* ... comme avant ... */
+                 let currentActive = document.querySelector('.category.active');
+                 if(currentActive) currentActive.classList.remove('active');
+                 button.classList.add('active');
+                 const selectedCategory = button.dataset.category;
+                 if(searchInput) searchInput.value = '';
+                 generateAppCards(filterAppsByCategory(selectedCategory));
+             }); });
+        }
+
+        if (homeLink) {
+            homeLink.addEventListener('click', () => { /* ... comme avant ... */
+                 let currentActive = document.querySelector('.category.active');
+                 if(currentActive) currentActive.classList.remove('active');
+                 let allCategory = document.querySelector('.category[data-category="all"]');
+                 if(allCategory) allCategory.classList.add('active');
+                 if(searchInput) searchInput.value = '';
+                 generateAppCards(apps);
+             });
+        }
+
+        if (searchInput) {
+            let searchTimeout;
+            searchInput.addEventListener('input', () => { clearTimeout(searchTimeout); searchTimeout = setTimeout(() => { const searchTerm = searchInput.value; let currentActive = document.querySelector('.category.active'); if(currentActive) currentActive.classList.remove('active'); let allCategory = document.querySelector('.category[data-category="all"]'); if(allCategory) allCategory.classList.add('active'); generateAppCards(filterAppsBySearch(searchTerm)); }, 250); });
+        }
+
+        // Écouteurs pour fermer la modale
+        if (closeModalBtn) closeModalBtn.addEventListener('click', closeAppModal);
+        if (closeModalBtnBottom) closeModalBtnBottom.addEventListener('click', closeAppModal);
+        if (modal) {
+            modal.addEventListener('click', (event) => { if (event.target === modal) closeAppModal(); });
+        }
+        document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && modal && modal.classList.contains('show')) closeAppModal(); });
+
+        // Footer year
         updateCopyrightYear();
-        generateAppCards(apps);
+
+        // Log final pour confirmer que le script a terminé sans erreur majeure
+        console.log("Script initialisé.");
 
     </script>
 </body>
