@@ -107,7 +107,11 @@
         .modal-left-title-area { flex-grow: 1; }
         #modalTitle { margin: 0 0 0.2rem 0; font-size: 1.5rem; color: var(--text-color); line-height: 1.3; font-weight: 600; }
         #modalCategory { font-size: 0.85rem; color: #555; background-color: var(--category-tag-bg); padding: 0.2rem 0.6rem; border-radius: 12px; display: inline-block; }
-        #modalDescription { line-height: 1.65; color: #555; font-size: 0.95rem; margin-bottom: 1.5rem; flex-grow: 1; }
+        /* Description dans la modale (complète) */
+        #modalDescription {
+             line-height: 1.65; color: #555; font-size: 0.95rem;
+             margin-bottom: 1.5rem; flex-grow: 1; /* Pousse boutons */
+        }
         .modal-left-actions { margin-top: auto; padding-top: 1rem; flex-shrink: 0; display: flex; flex-direction: column; gap: 0.8rem; align-items: center; }
         #closeModalBtnBottom { background-color: transparent; border: 1px solid #ccc; color: #777; padding: 0.5rem 1.5rem; border-radius: 20px; font-size: 0.9rem; cursor: pointer; transition: background-color 0.2s, color 0.2s, border-color 0.2s; text-decoration: none; text-align: center; }
         #closeModalBtnBottom:hover { background-color: #f0f0f0; border-color: #aaa; color: #333; }
@@ -130,31 +134,11 @@
 
         /* --- Responsive --- */
         @media (max-width: 768px) {
-            .modal-content {
-                flex-direction: column; /* Empile les colonnes */
-                max-width: 500px; /* Plus étroit sur mobile */
-                max-height: 85vh; /* Hauteur MAXIMALE de la modale */
-                overflow-y: auto; /* Scroll sur TOUT le contenu si ça dépasse 85vh */
-                overflow-x: hidden;
-            }
-            .modal-column-left, .modal-column-right {
-                 max-height: none; /* Annule la hauteur max interne des colonnes */
-                 overflow-y: visible; /* Annule le scroll interne des colonnes */
-            }
-            .modal-column-left {
-                 padding: 1.5rem;
-                 order: 2; /* Texte après l'image */
-            }
-            .modal-left-actions {
-                 margin-top: 1.5rem; /* Espace normal avant les boutons */
-            }
-            .modal-column-right {
-                order: 1; /* L'image vient en premier */
-                flex-basis: auto; /* Annule la base */
-                width: 100%;
-                /* min-height et max-height sont enlevés ici */
-                background-color: #e9edf0;
-            }
+            .modal-content { flex-direction: column; max-width: 500px; max-height: 85vh; overflow-y: auto; overflow-x: hidden; }
+            .modal-column-left, .modal-column-right { max-height: none; overflow-y: visible; }
+            .modal-column-left { padding: 1.5rem; order: 2; }
+            .modal-left-actions { margin-top: 1.5rem; }
+            .modal-column-right { order: 1; flex-basis: auto; width: 100%; background-color: #e9edf0; } /* Hauteur auto */
             #modalImagePreviewContainer { padding: 0.5rem; }
             .modal-icon { width: 45px; height: 45px; } #modalTitle { font-size: 1.3rem; } #modalCategory { font-size: 0.8rem; } #modalDescription { font-size: 0.9rem; }
             #startAppBtn { font-size: 0.95rem; padding: 0.6rem 1.5rem; } #closeModalBtnBottom { font-size: 0.85rem; padding: 0.4rem 1.2rem; }
@@ -166,7 +150,6 @@
               .logo { font-size: 1.3rem; } .search-bar input { font-size: 0.9rem; } .category { font-size: 0.85rem; padding: 0.4rem 0.8rem; }
               .modal-content { max-width: 95%; }
               .modal-column-left { padding: 1.2rem; }
-              /* Pas besoin de style spécifique pour modal-column-right ici */
               #modalTitle { font-size: 1.2rem; }
          }
 
@@ -231,15 +214,63 @@
 
     <script defer>
         // --- Données des Applications ---
+        // *** URLS MISES À JOUR AVEC bit.ly ***
         const apps = [
-            { id: 'siestefm', name: 'Sieste FM', tech: ['html'], category: 'musique', description: 'Sieste FM est une webradio conçue pour favoriser la relaxation et la méditation. Elle propose une sélection de musiques apaisantes, telles que "Blues in the Light of Dawn", pour créer une ambiance propice au repos. L\'application inclut des options de minuterie (10, 15, 30 minutes ou illimité) pour programmer une sieste, ainsi qu\'une fonction d\'alarme musicale pour un réveil en douceur. Parfaite pour une pause détente à tout moment de la journée.', updated: 'Il y a 10 heures', demoUrl: 'https://bit.ly/SiesteFM', sourceUrl: 'https://bit.ly/SiesteFM', image: 'images/logo_siestefm.png', previewImage: 'images/siestefm_preview.png', license: null },
-            { id: 'sotocawebradio', name: 'SOTOCA WebRadio', tech: ['javascript'], category: 'musique', description: 'SOTOCA WebRadio est une application de webradio personnalisable qui offre une large variété de stations pour répondre à tous les goûts musicaux. Que vous préfériez des sons calmes et puissants, des rythmes entraînants ou des mélodies spirituelles comme "Maylo" par Jensetis der Grenzen, cette webradio vous permet de choisir parmi des catégories telles que "Horizon Infini", "Calme Puissant", "Esprit Aiguisé", et "Quête Sauvage". Une expérience musicale immersive pour toutes les humeurs.', updated: 'Il y a 20 heures', demoUrl: 'https://bit.ly/webradio', sourceUrl: 'https://bit.ly/webradio', image: 'images/logo_sotocawebradio.png', previewImage: 'images/sotocawebradio_preview.png', license: null },
-            { id: 'larouedelavie', name: 'La Roue de la Vie', tech: ['javascript'], category: 'developpement', description: 'La Roue de la Vie est un outil interactif conçu pour vous aider à évaluer et équilibrer les différents aspects de votre vie personnelle. À travers une interface intuitive, vous pouvez noter des domaines clés tels que la santé physique, le mental, et d\'autres aspects de votre bien-être sur une échelle de 1 à 10. L\'application génère une visualisation graphique sous forme de roue, vous permettant d\'identifier les déséquilibres et de définir des objectifs pour améliorer votre épanouissement global.', updated: 'Il y a 20 heures', demoUrl: 'https://bit.ly/LaRoueDeLaVie', sourceUrl: 'https://bit.ly/LaRoueDeLaVie', image: 'images/logo_larouedelavie.png', previewImage: 'images/larouedelavie_preview.png', license: null },
-            { id: 'danslatetedunchampion', name: 'Dans la Tête d\'un Champion', tech: ['html'], category: 'jeux', description: 'Dans la Tête d\'un Champion est un jeu de réflexion et de stratégie qui met à l\'épreuve vos compétences cognitives et tactiques. Inspiré des jeux télévisés, il propose des défis où vous devez sélectionner et placer des réponses dans une grille pour accumuler des points. Avec des options de mise (75% ou 100% des gains), des statistiques de réussite (par exemple, 89%), et des historiques de parties, ce jeu offre une expérience immersive pour les amateurs de quiz et de challenges intellectuels.', updated: 'Il y a 4 jours', demoUrl: 'https://bit.ly/DansLaTeteDunChampion', sourceUrl: 'https://bit.ly/DansLaTeteDunChampion', image: 'images/logo_danslatetedunchampion.png', previewImage: 'images/danslatetedunchampion_preview.png', license: null }
+            {
+                id: 'siestefm',
+                name: '🌟<Br>Sieste FM',
+                tech: ['html'],
+                category: 'musique',
+                description: 'Sieste FM est une webradio conçue pour favoriser la relaxation et la méditation. Elle propose une sélection de musiques apaisantes, telles que "Blues in the Light of Dawn", pour créer une ambiance propice au repos. L\'application inclut des options de minuterie (10, 15, 30 minutes ou illimité) pour programmer une sieste, ainsi qu\'une fonction d\'alarme musicale pour un réveil en douceur. Parfaite pour une pause détente à tout moment de la journée.',
+                updated: 'Il y a 10 heures',
+                demoUrl: 'https://bit.ly/siestefm', // URL Corrigée
+                sourceUrl: 'https://bit.ly/siestefm', // URL Corrigée (si différente, mettre la bonne)
+                image: 'images/logo_siestefm.png',
+                previewImage: 'images/siestefm_preview.png', // Assurez-vous que ce chemin est correct
+                license: null
+            },
+            {
+                id: 'sotocawebradio',
+                name: 'SOTOCA WebRadio',
+                tech: ['javascript'],
+                category: 'musique',
+                description: 'SOTOCA WebRadio est une application de webradio personnalisable qui offre une large variété de stations pour répondre à tous les goûts musicaux. Que vous préfériez des sons calmes et puissants, des rythmes entraînants ou des mélodies spirituelles comme "Maylo" par Jensetis der Grenzen, cette webradio vous permet de choisir parmi des catégories telles que "Horizon Infini", "Calme Puissant", "Esprit Aiguisé", et "Quête Sauvage". Une expérience musicale immersive pour toutes les humeurs.',
+                updated: 'Il y a 20 heures',
+                demoUrl: 'https://bit.ly/sotocawebradio', // URL Corrigée
+                sourceUrl: 'https://bit.ly/sotocawebradio', // URL Corrigée (si différente, mettre la bonne)
+                image: 'images/logo_sotocawebradio.png',
+                previewImage: 'images/sotocawebradio_preview.png', // Assurez-vous que ce chemin est correct
+                license: null
+            },
+            {
+                id: 'larouedelavie',
+                name: '🌟<Br>La Roue de la Vie',
+                tech: ['javascript'],
+                category: 'developpement',
+                description: 'La Roue de la Vie est un outil interactif conçu pour vous aider à évaluer et équilibrer les différents aspects de votre vie personnelle. À travers une interface intuitive, vous pouvez noter des domaines clés tels que la santé physique, le mental, et d\'autres aspects de votre bien-être sur une échelle de 1 à 10. L\'application génère une visualisation graphique sous forme de roue, vous permettant d\'identifier les déséquilibres et de définir des objectifs pour améliorer votre épanouissement global.',
+                updated: 'Il y a 20 heures',
+                demoUrl: 'https://bit.ly/LaRoueDeLaVie', // URL Corrigée
+                sourceUrl: 'https://bit.ly/LaRoueDeLaVie', // URL Corrigée (si différente, mettre la bonne)
+                image: 'images/logo_larouedelavie.png',
+                previewImage: 'images/larouedelavie_preview.png', // Assurez-vous que ce chemin est correct
+                license: null
+            },
+            {
+                id: 'danslatetedunchampion',
+                name: '🌟🌟🌟<Br>Dans la Tête d\'un Champion',
+                tech: ['html'],
+                category: 'jeux',
+                description: 'Dans la Tête d\'un Champion est un jeu de réflexion et de stratégie qui met à l\'épreuve vos compétences cognitives et tactiques. Inspiré des jeux télévisés, il propose des défis où vous devez sélectionner et placer des réponses dans une grille pour accumuler des points. Avec des options de mise (75% ou 100% des gains), des statistiques de réussite (par exemple, 89%), et des historiques de parties, ce jeu offre une expérience immersive pour les amateurs de quiz et de challenges intellectuels.',
+                updated: 'Il y a 4 jours',
+                demoUrl: 'https://bit.ly/DansLaTeteDunChampion', // URL Corrigée
+                sourceUrl: 'https://bit.ly/DansLaTeteDunChampion', // URL Corrigée (si différente, mettre la bonne)
+                image: 'images/logo_danslatetedunchampion.png',
+                previewImage: 'images/danslatetedunchampion_preview.png', // Assurez-vous que ce chemin est correct
+                license: null
+            }
         ];
 
         // --- Éléments du DOM ---
-        // (Sélections comme dans la version précédente, avec vérifications implicites car le script est 'defer')
         const appsGrid = document.getElementById('appsGrid');
         const searchInput = document.getElementById('searchInput');
         const categoryButtons = document.querySelectorAll('.category');
@@ -262,19 +293,14 @@
         function capitalizeFirstLetter(string) { if (!string) return ''; return string.charAt(0).toUpperCase() + string.slice(1); }
 
         function generateAppCards(appsToShow) {
-            // (Fonction generateAppCards comme dans la version précédente)
-             if (!appsGrid) { console.error("appsGrid non trouvé!"); return; }
+            if (!appsGrid) { console.error("appsGrid non trouvé!"); return; }
             appsGrid.innerHTML = '';
-            if (!appsToShow || appsToShow.length === 0) {
-                 appsGrid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; color: #777;">Aucune application trouvée.</p>';
-                 return;
-            }
+            if (!appsToShow || appsToShow.length === 0) { appsGrid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; color: #777;">Aucune application trouvée.</p>'; return; }
             appsToShow.forEach(app => {
                  const appCard = document.createElement('div');
                 appCard.className = 'app-card';
                 appCard.dataset.id = app.id;
                  const shortDescription = app.description.length > 100 ? app.description.substring(0, 100) + '...' : app.description;
-
                 appCard.innerHTML = `
                     <div class="app-icon"><img src="${app.image || 'images/placeholder.png'}" alt="Icône ${app.name || 'App'}" loading="lazy"></div>
                     <div class="app-info">
@@ -292,13 +318,12 @@
         function filterAppsBySearch(term) { const lowerCaseTerm = term.toLowerCase().trim(); if (!lowerCaseTerm) return apps; return apps.filter(app => app.name.toLowerCase().includes(lowerCaseTerm) || app.description.toLowerCase().includes(lowerCaseTerm)); }
 
         function openAppModal(app) {
-            // (Fonction openAppModal comme dans la version précédente, avec vérifications)
-             if (!modal || !app) { console.error("Modale ou données App manquantes."); return; }
+            if (!modal || !app) { console.error("Modale ou données App manquantes."); return; }
             if (modalIcon) modalIcon.innerHTML = `<img src="${app.image || ''}" alt="Icône ${app.name || 'App'}">`; else console.warn("modalIcon non trouvé");
             if (modalTitle) modalTitle.textContent = app.name || 'Application'; else console.warn("modalTitle non trouvé");
             if (modalCategory) modalCategory.textContent = capitalizeFirstLetter(app.category) || 'Divers'; else console.warn("modalCategory non trouvé");
             if (modalDescription) modalDescription.textContent = app.description || 'Pas de description.'; else console.warn("modalDescription non trouvé");
-            if (startAppBtn) startAppBtn.href = app.demoUrl || '#'; else console.warn("startAppBtn non trouvé");
+            if (startAppBtn) { startAppBtn.href = app.demoUrl || '#'; } else { console.warn("startAppBtn non trouvé"); } // URL Corrigée ici
             if (modalImagePreviewContainer && modalImagePreview) {
                 if (app.previewImage && app.previewImage.trim() !== '') {
                     modalImagePreview.src = app.previewImage; modalImagePreview.alt = `Aperçu de ${app.name || 'App'}`;
@@ -309,23 +334,18 @@
             } else { console.warn("Élément(s) image preview non trouvés"); }
             modal.classList.add('show'); document.body.classList.add('modal-open');
             if (modalColumnLeft) { modalColumnLeft.scrollTop = 0; } else { console.warn("modalColumnLeft non trouvé pour scroll reset"); }
-             // Scroll principal content sur mobile
-             if (window.innerWidth <= 768 && modalContent) { modalContent.scrollTop = 0; }
-
+            if (window.innerWidth <= 768 && modalContent) { modalContent.scrollTop = 0; }
         }
 
         function closeAppModal() {
-            // (Fonction closeAppModal comme dans la version précédente)
              if (!modal) return;
-            modal.classList.remove('show');
-            document.body.classList.remove('modal-open');
+            modal.classList.remove('show'); document.body.classList.remove('modal-open');
             if (modalImagePreview) modalImagePreview.src = '';
             if (modalImagePreviewContainer) modalImagePreviewContainer.classList.add('hidden');
         }
         function updateCopyrightYear() { if (copyrightYearSpan) { copyrightYearSpan.textContent = new Date().getFullYear(); } else { console.warn("copyrightYearSpan non trouvé"); } }
 
         // --- Initialisation & Écouteurs d'Événements ---
-        // (Comme dans la version précédente, avec vérifications initiales)
         if(!appsGrid || !categoryButtons || !homeLink || !searchInput || !modal || !closeModalBtn || !closeModalBtnBottom || !copyrightYearSpan) {
              console.error("ERREUR CRITIQUE: Un ou plusieurs éléments essentiels du DOM n'ont pas été trouvés. Vérifiez les IDs HTML.");
         } else {
