@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Applications</title>
+    <style>
+        :root {
+            --primary-color: #4285f4;
+            --secondary-color: #34a853;
+            --text-color: #333;
+            --bg-light: #f8f9fa;
+            --card-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        body {
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen, Ubuntu, Cantarell, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            background-color: var(--bg-light);
+        }
+        
+        header {
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .search-bar {
+            flex-grow: 1;
+            margin: 0 2rem;
+            position: relative;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 24px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        .categories {
+            display: flex;
+            overflow-x: auto;
+            gap: 1rem;
+            padding: 0.5rem 0;
+            margin-bottom: 1.5rem;
+        }
+        
+        .category {
+            padding: 0.5rem 1rem;
+            background-color: white;
+            border-radius: 20px;
+            white-space: nowrap;
+            cursor: pointer;
+            border: 1px solid #ddd;
+        }
+        
+        .category.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .app-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+        
+        .app-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .app-icon {
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #e9f0fe;
+        }
+        
+        .app-icon .icon-placeholder {
+            width: 80px;
+            height: 80px;
+            border-radius: 16px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        
+        .app-info {
+            padding: 1rem;
+        }
+        
+        .app-name {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .app-meta {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .tech-tag {
+            background-color: #f0f0f0;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            margin-right: 0.5rem;
+        }
+        
+        .tech-html {
+            background-color: #e34c26;
+            color: white;
+        }
+        
+        .tech-js {
+            background-color: #f7df1e;
+            color: black;
+        }
+        
+        .license-tag {
+            background-color: #f0f0f0;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            margin-left: auto;
+        }
+        
+        .app-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .update-info {
+            font-size: 0.85rem;
+            color: #999;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            position: relative;
+            margin: 10% auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .modal-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .modal-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            margin-right: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        .modal-app-info h2 {
+            margin: 0 0 0.5rem 0;
+        }
+        
+        .modal-tech-tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .modal-description {
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background-color: #f0f0f0;
+            color: var(--text-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: #3367d6;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #e0e0e0;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: white;
+            margin-top: 2rem;
+            border-top: 1px solid #eee;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .search-bar {
+                width: 100%;
+                margin: 1rem 0;
+            }
+            
+            .apps-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">My App Store</div>
+            <div class="search-bar">
+                <input type="text" placeholder="Rechercher une application..." id="searchInput">
+            </div>
+        </div>
+    </header>
+    
+    <main>
+        <div class="categories">
+            <div class="category active" data-category="all">Tous</div>
+            <div class="category" data-category="html">HTML</div>
+            <div class="category" data-category="javascript">JavaScript</div>
+        </div>
+        
+        <div class="apps-grid" id="appsGrid">
+            <!-- Application cards will be generated here -->
+        </div>
+    </main>
+    
+    <div id="appModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <div class="modal-header">
+                <div class="modal-icon" id="modalIcon"></div>
+                <div class="modal-app-info">
+                    <h2 id="modalTitle">App Name</h2>
+                    <div class="modal-tech-tags" id="modalTechTags"></div>
+                </div>
+            </div>
+            <div class="modal-description" id="modalDescription">
+                Description de l'application...
+            </div>
+            <div class="modal-actions">
+                <a id="viewDemoBtn" href="#" target="_blank" class="btn btn-primary">Voir Démo</a>
+                <a id="viewSourceBtn" href="#" target="_blank" class="btn btn-secondary">Code Source</a>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        © 2025 My App Store - Tous droits réservés
+    </footer>
+
+    <script>
+        // Sample app data (replace with your actual projects)
+        const apps = [
+            {
+                id: 'playstore',
+                name: 'Play Store',
+                tech: ['other'],
+                description: 'Une application permettant de présenter et organiser vos projets.',
+                updated: '2 minutes ago',
+                demoUrl: 'https://github.com/your-username/playstore',
+                sourceUrl: 'https://github.com/your-username/playstore',
+                icon: 'P'
+            },
+            {
+                id: 'larouedelivie',
+                name: 'La Roue de la Vie',
+                tech: ['html'],
+                description: 'Application web permettant de visualiser et équilibrer différents aspects de votre vie.',
+                updated: '9 hours ago',
+                demoUrl: 'https://github.com/your-username/larouedelivie',
+                sourceUrl: 'https://github.com/your-username/larouedelivie',
+                icon: 'R'
+            },
+            {
+                id: 'siestefm',
+                name: 'Sieste FM',
+                tech: ['html'],
+                description: 'Une webradio dédiée à la relaxation et la méditation.',
+                updated: '10 hours ago',
+                demoUrl: 'https://github.com/your-username/SiesteFM',
+                sourceUrl: 'https://github.com/your-username/SiesteFM',
+                icon: 'S'
+            },
+            {
+                id: 'webradio',
+                name: 'Web Radio',
+                tech: ['javascript'],
+                description: 'Application de webradio personnalisable avec différentes stations.',
+                updated: '20 hours ago',
+                demoUrl: 'https://github.com/your-username/webradio',
+                sourceUrl: 'https://github.com/your-username/webradio',
+                icon: 'W'
+            },
+            {
+                id: 'awale',
+                name: 'Awalé',
+                tech: ['html'],
+                license: 'MIT License',
+                description: 'Implémentation du jeu traditionnel africain Awalé.',
+                updated: '4 days ago',
+                demoUrl: 'https://github.com/your-username/awale',
+                sourceUrl: 'https://github.com/your-username/awale',
+                icon: 'A'
+            }
+        ];
+
+        // Generate app cards
+        function generateAppCards(appsToShow) {
+            const appsGrid = document.getElementById('appsGrid');
+            appsGrid.innerHTML = '';
+            
+            appsToShow.forEach(app => {
+                const appCard = document.createElement('div');
+                appCard.className = 'app-card';
+                appCard.dataset.id = app.id;
+                
+                let techTags = '';
+                app.tech.forEach(tech => {
+                    let techClass = '';
+                    let techName = '';
+                    
+                    if (tech === 'html') {
+                        techClass = 'tech-html';
+                        techName = 'HTML';
+                    } else if (tech === 'javascript') {
+                        techClass = 'tech-js';
+                        techName = 'JavaScript';
+                    } else {
+                        techName = 'Other';
+                    }
+                    
+                    techTags += `<span class="tech-tag ${techClass}">${techName}</span>`;
+                });
+                
+                let licenseTag = app.license ? 
+                    `<span class="license-tag">${app.license}</span>` : '';
+                
+                appCard.innerHTML = `
+                    <div class="app-icon">
+                        <div class="icon-placeholder">${app.icon}</div>
+                    </div>
+                    <div class="app-info">
+                        <div class="app-name">${app.name}</div>
+                        <div class="app-meta">
+                            ${techTags}
+                            ${licenseTag}
+                        </div>
+                        <div class="app-description">${app.description.substring(0, 80)}${app.description.length > 80 ? '...' : ''}</div>
+                        <div class="update-info">Updated ${app.updated}</div>
+                    </div>
+                `;
+                
+                appCard.addEventListener('click', () => openAppModal(app));
+                appsGrid.appendChild(appCard);
+            });
+        }
+
+        // Filter apps by category
+        function filterAppsByCategory(category) {
+            if (category === 'all') {
+                return apps;
+            } else {
+                return apps.filter(app => app.tech.includes(category));
+            }
+        }
+
+        // Filter apps by search term
+        function filterAppsBySearch(term) {
+            term = term.toLowerCase();
+            return apps.filter(app => 
+                app.name.toLowerCase().includes(term) ||
+                app.description.toLowerCase().includes(term)
+            );
+        }
+
+        // Initialize category filtering
+        document.querySelectorAll('.category').forEach(categoryBtn => {
+            categoryBtn.addEventListener('click', () => {
+                // Update active state
+                document.querySelector('.category.active').classList.remove('active');
+                categoryBtn.classList.add('active');
+                
+                // Filter apps
+                const category = categoryBtn.dataset.category;
+                const filteredApps = filterAppsByCategory(category);
+                generateAppCards(filteredApps);
+            });
+        });
+
+        // Initialize search functionality
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value;
+            const filteredApps = filterAppsBySearch(searchTerm);
+            generateAppCards(filteredApps);
+        });
+
+        // Modal functionality
+        const modal = document.getElementById('appModal');
+        const closeModal = document.getElementById('closeModal');
+
+        function openAppModal(app) {
+            document.getElementById('modalIcon').textContent = app.icon;
+            document.getElementById('modalTitle').textContent = app.name;
+            
+            const modalTechTags = document.getElementById('modalTechTags');
+            modalTechTags.innerHTML = '';
+            
+            app.tech.forEach(tech => {
+                let techClass = '';
+                let techName = '';
+                
+                if (tech === 'html') {
+                    techClass = 'tech-html';
+                    techName = 'HTML';
+                } else if (tech === 'javascript') {
+                    techClass = 'tech-js';
+                    techName = 'JavaScript';
+                } else {
+                    techName = 'Other';
+                }
+                
+                const techTag = document.createElement('span');
+                techTag.className = `tech-tag ${techClass}`;
+                techTag.textContent = techName;
+                modalTechTags.appendChild(techTag);
+            });
+            
+            if (app.license) {
+                const licenseTag = document.createElement('span');
+                licenseTag.className = 'license-tag';
+                licenseTag.textContent = app.license;
+                modalTechTags.appendChild(licenseTag);
+            }
+            
+            document.getElementById('modalDescription').textContent = app.description;
+            document.getElementById('viewDemoBtn').href = app.demoUrl;
+            document.getElementById('viewSourceBtn').href = app.sourceUrl;
+            
+            modal.style.display = 'block';
+        }
+
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Initialize app display
+        generateAppCards(apps);
+    </script>
+</body>
+</html>
