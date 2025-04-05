@@ -22,7 +22,7 @@
             padding: 0;
             color: var(--text-color);
             background-color: var(--bg-light);
-            line-height: 1.6; /* Améliore la lisibilité */
+            line-height: 1.6;
         }
 
         /* --- Header --- */
@@ -33,7 +33,7 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            border-bottom: 1px solid #eee; /* Ajout d'une ligne subtile */
+            border-bottom: 1px solid #eee;
         }
 
         .header-content {
@@ -49,7 +49,7 @@
             font-weight: bold;
             color: var(--primary-color);
             cursor: pointer;
-            text-decoration: none; /* Au cas où on le transformerait en lien */
+            text-decoration: none;
         }
 
         .search-bar {
@@ -64,13 +64,13 @@
             border-radius: 24px;
             border: 1px solid #ddd;
             font-size: 1rem;
-            box-sizing: border-box; /* Inclut padding et border dans la largeur */
+            box-sizing: border-box;
         }
 
         /* --- Main Content --- */
         main {
             max-width: 1200px;
-            margin: 1.5rem auto; /* Ajout d'un peu plus d'espace */
+            margin: 1.5rem auto;
             padding: 1rem;
         }
 
@@ -79,9 +79,9 @@
             display: flex;
             overflow-x: auto;
             gap: 1rem;
-            padding-bottom: 0.5rem; /* Espace pour la barre de défilement si visible */
+            padding-bottom: 0.5rem;
             margin-bottom: 1.5rem;
-            -webkit-overflow-scrolling: touch; /* Défilement plus fluide sur iOS */
+            -webkit-overflow-scrolling: touch;
         }
 
         .category {
@@ -92,7 +92,7 @@
             cursor: pointer;
             border: 1px solid #ddd;
             transition: background-color 0.2s, color 0.2s, border-color 0.2s;
-            font-size: 0.9rem; /* Légère réduction pour la compacité */
+            font-size: 0.9rem;
         }
 
         .category:hover {
@@ -120,7 +120,7 @@
             box-shadow: var(--card-shadow);
             transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
             cursor: pointer;
-            display: flex; /* Utilisation de flex pour la structure interne */
+            display: flex;
             flex-direction: column;
         }
 
@@ -134,47 +134,47 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #e9f0fe; /* Couleur de fond légère */
+            background-color: #e9f0fe;
             overflow: hidden;
-            flex-shrink: 0; /* Empêche l'icône de rétrécir */
+            flex-shrink: 0;
         }
 
         .app-icon img {
-            max-width: 80%;   /* Utiliser max-width/height pour éviter l'étirement */
+            max-width: 80%;
             max-height: 80%;
-            object-fit: contain; /* Garde les proportions */
-            object-position: center; /* Centre l'image si elle est plus petite */
+            object-fit: contain;
+            object-position: center;
         }
 
         .app-info {
             padding: 1rem;
             display: flex;
             flex-direction: column;
-            flex-grow: 1; /* Permet à cette section de prendre l'espace restant */
+            flex-grow: 1;
         }
 
         .app-name {
             font-weight: bold;
             margin-bottom: 0.5rem;
             font-size: 1.1rem;
-            color: var(--text-color); /* Assure la couleur */
+            color: var(--text-color);
         }
 
         .app-meta {
             display: flex;
             align-items: center;
-            flex-wrap: wrap; /* Permet aux tags de passer à la ligne si besoin */
-            gap: 0.5rem; /* Espace entre les tags */
+            flex-wrap: wrap;
+            gap: 0.5rem;
             margin-bottom: 0.75rem;
             font-size: 0.9rem;
             color: #666;
         }
 
         .tech-tag, .license-tag {
-            padding: 0.25rem 0.6rem; /* Ajustement padding */
+            padding: 0.25rem 0.6rem;
             border-radius: 12px;
             font-size: 0.75rem;
-            line-height: 1.2; /* Ajustement hauteur de ligne */
+            line-height: 1.2;
         }
 
         .tech-tag {
@@ -185,27 +185,27 @@
         .tech-js { background-color: #f7df1e; color: black; }
 
         .license-tag {
-            background-color: #e0e0e0; /* Couleur légèrement différente */
-            margin-left: auto; /* Pousse à droite */
+            background-color: #e0e0e0;
+            margin-left: auto;
         }
 
         .app-description {
-            color: #555; /* Légèrement plus foncé pour contraste */
+            color: #555;
             font-size: 0.9rem;
             margin-bottom: 1rem;
-            flex-grow: 1; /* Prend l'espace avant l'info de màj */
+            flex-grow: 1;
         }
 
         .update-info {
-            font-size: 0.8rem; /* Encore plus petit */
+            font-size: 0.8rem;
             color: #999;
-            margin-top: auto; /* Pousse en bas de la carte */
-            padding-top: 0.5rem; /* Espace au-dessus */
+            margin-top: auto;
+            padding-top: 0.5rem;
         }
 
         /* --- Modale --- */
         .modal {
-            display: none; /* Caché par défaut */
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
@@ -215,12 +215,12 @@
             z-index: 1000;
             justify-content: center;
             align-items: center;
-            padding: 1rem; /* Espace sur petits écrans */
+            padding: 1rem;
             box-sizing: border-box;
         }
 
         .modal.show {
-            display: flex; /* Affiché via JS */
+            display: flex;
         }
 
         .modal-content {
@@ -228,8 +228,8 @@
             background: linear-gradient(135deg, #ffffff, #f0f4ff);
             border-radius: 12px;
             max-width: 700px;
-            width: 100%; /* Prend la largeur dispo jusqu'à max-width */
-            max-height: 90vh; /* Hauteur max pour laisser voir le fond */
+            width: 100%;
+            max-height: 90vh;
             overflow-y: auto;
             box-shadow: 0 8px 30px rgba(0,0,0,0.2);
             padding: 2rem;
@@ -246,9 +246,9 @@
             top: 15px;
             right: 15px;
             font-size: 1.8rem;
-            line-height: 1; /* Empêche décalage vertical */
+            line-height: 1;
             cursor: pointer;
-            color: #888; /* Moins agressif */
+            color: #888;
             transition: color 0.2s, transform 0.2s;
         }
 
@@ -260,23 +260,23 @@
         .modal-header {
             display: flex;
             align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.5rem; /* Espace avant l'image */
             border-bottom: 1px solid #eee;
             padding-bottom: 1rem;
-            gap: 1.5rem; /* Espace entre icône et infos */
+            gap: 1.5rem;
         }
 
         .modal-icon {
             width: 80px;
             height: 80px;
             border-radius: 12px;
-            flex-shrink: 0; /* Empêche de rétrécir */
+            flex-shrink: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
             border: 2px solid #ddd;
-            background-color: #fff; /* Fond blanc pour icônes transparentes */
+            background-color: #fff;
         }
 
         .modal-icon img {
@@ -299,36 +299,61 @@
 
         .modal-tech-tags {
             display: flex;
-            flex-wrap: wrap; /* Permet le passage à la ligne */
+            flex-wrap: wrap;
             gap: 0.5rem;
-            margin-bottom: 0.5rem; /* Réduit l'espace si pas de licence */
+            margin-bottom: 0.5rem;
         }
-         /* Utilise les mêmes styles de tags que la carte */
         .modal-tech-tags .tech-tag, .modal-tech-tags .license-tag {
              padding: 0.25rem 0.6rem;
              border-radius: 12px;
-             font-size: 0.8rem; /* Légèrement plus grand que sur la carte */
+             font-size: 0.8rem;
              line-height: 1.2;
         }
-        .modal-tech-tags .license-tag { margin-left: 0; } /* Pas besoin de pousser à droite ici */
+        .modal-tech-tags .license-tag { margin-left: 0; }
+
+        /* --- Styles pour l'image d'aperçu dans la modale --- */
+        .modal-preview-image {
+            margin-bottom: 1.5rem; /* Espace avant la description */
+            text-align: center;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        #modalImagePreview {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            max-height: 45vh; /* Limite la hauteur */
+            object-fit: contain; /* Ou 'cover' si tu préfères remplir */
+            object-position: center;
+            margin: 0 auto;
+            border-radius: 6px;
+        }
+
+        /* Cache le conteneur si l'image n'est pas définie (géré par JS) */
+        .modal-preview-image.hidden {
+            display: none;
+        }
+        /* Fin styles image aperçu */
 
 
         .modal-description {
-            line-height: 1.7; /* Augmente interligne pour la lecture */
+            line-height: 1.7;
             margin-bottom: 2rem;
-            color: #444; /* Texte un peu plus foncé */
+            color: #444;
             font-size: 1rem;
         }
 
         .modal-actions {
             display: flex;
-            justify-content: center; /* Centre le bouton */
-            margin-top: 1rem; /* Espace avant le bouton */
+            justify-content: center;
+            margin-top: 1rem;
         }
 
         /* --- Boutons --- */
         .btn {
-            display: inline-block; /* Permet padding/margin */
+            display: inline-block;
             padding: 0.75rem 2rem;
             border-radius: 25px;
             border: none;
@@ -346,17 +371,17 @@
             box-shadow: 0 2px 5px rgba(0, 100, 255, 0.3);
         }
 
-        .btn-primary:hover, .btn-primary:focus { /* Ajout de :focus pour accessibilité */
+        .btn-primary:hover, .btn-primary:focus {
             background: linear-gradient(45deg, #3367d6, #2e8b43);
             transform: translateY(-2px);
             box-shadow: 0 4px 10px rgba(0, 100, 255, 0.4);
-            outline: none; /* Supprime l'outline par défaut si focus visible */
+            outline: none;
         }
 
         /* --- Footer --- */
         footer {
             text-align: center;
-            padding: 2rem 1rem; /* Ajout padding horizontal */
+            padding: 2rem 1rem;
             background-color: white;
             margin-top: 2rem;
             border-top: 1px solid #eee;
@@ -369,12 +394,12 @@
             .header-content {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 0.5rem; /* Espace entre logo et barre recherche */
+                gap: 0.5rem;
             }
 
             .search-bar {
                 width: 100%;
-                margin: 0.5rem 0 0 0; /* Ajustement marge */
+                margin: 0.5rem 0 0 0;
             }
 
             main {
@@ -383,53 +408,64 @@
 
             .apps-grid {
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-                gap: 1rem; /* Réduit l'espace sur mobile */
+                gap: 1rem;
             }
 
             .modal-content {
                 padding: 1.5rem;
-                max-height: 85vh; /* Un peu plus de hauteur sur mobile */
+                max-height: 85vh;
             }
 
             .modal-header {
-                flex-direction: column; /* Icône au-dessus du titre */
-                align-items: flex-start; /* Alignement à gauche */
+                flex-direction: column;
+                align-items: flex-start;
                 gap: 1rem;
+                 margin-bottom: 1rem; /* Réduit marge si image suit */
+                 padding-bottom: 1rem;
+                 border-bottom: none; /* Enlève la ligne ici, l'image fait séparation */
             }
+             /* Optionnel: Ajouter une ligne après l'en-tête si pas d'image */
+             .modal-preview-image.hidden + .modal-description {
+                  margin-top: -0.5rem; /* Compense l'absence de marge bottom de l'header */
+                  padding-top: 1.5rem;
+                  border-top: 1px solid #eee;
+             }
+
 
             .modal-icon {
                 width: 60px;
                 height: 60px;
-                margin-right: 0; /* Supprime marge à droite */
-                align-self: flex-start; /* Garde à gauche */
+                margin-right: 0;
+                align-self: flex-start;
             }
 
             .modal-app-info h2 {
-                font-size: 1.6rem; /* Taille de titre adaptée */
+                font-size: 1.6rem;
             }
 
             .modal-description {
-                font-size: 0.95rem; /* Taille de texte adaptée */
+                font-size: 0.95rem;
             }
 
              .btn {
-                 padding: 0.7rem 1.5rem; /* Bouton légèrement plus petit */
+                 padding: 0.7rem 1.5rem;
                  font-size: 0.95rem;
+             }
+             #modalImagePreview {
+                 max-height: 40vh; /* Un peu moins haut sur mobile */
              }
         }
 
          @media (max-width: 480px) {
              .apps-grid {
-                /* Une seule colonne sur très petits écrans */
-                grid-template-columns: 1fr;
-             }
-             .app-card {
-                 /* Optionnel: adapter la hauteur de l'icône */
-                 /* .app-icon { height: 120px; } */
+                 grid-template-columns: 1fr;
              }
              .logo { font-size: 1.3rem; }
              .search-bar input { font-size: 0.9rem; }
              .category { font-size: 0.85rem; padding: 0.4rem 0.8rem; }
+              #modalImagePreview {
+                  max-height: 35vh; /* Encore moins haut sur petit écran */
+              }
          }
     </style>
 </head>
@@ -450,25 +486,10 @@
             <div class="category" data-category="musique">Musique</div>
             <div class="category" data-category="developpement">Développement personnel</div>
             <div class="category" data-category="jeux">Jeux</div>
-            <!-- Ajouter d'autres catégories ici si besoin -->
         </div>
 
         <div class="apps-grid" id="appsGrid">
             <!-- Les cartes d'application seront générées ici par JavaScript -->
-            <!-- Exemple de structure (sera remplacé par JS) :
-            <div class="app-card">
-                <div class="app-icon"><img src="images/placeholder.png" alt="App Icon"></div>
-                <div class="app-info">
-                    <div class="app-name">Nom de l'App</div>
-                    <div class="app-meta">
-                        <span class="tech-tag tech-js">JavaScript</span>
-                        <span class="license-tag">MIT</span>
-                    </div>
-                    <div class="app-description">Courte description ici...</div>
-                    <div class="update-info">Updated X days ago</div>
-                </div>
-            </div>
-             -->
         </div>
     </main>
 
@@ -487,6 +508,13 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Conteneur pour l'image d'aperçu -->
+            <div class="modal-preview-image hidden" id="modalImagePreviewContainer">
+                 <!-- Image chargée par JS -->
+                <img id="modalImagePreview" src="" alt="Aperçu de l'application" loading="lazy">
+            </div>
+
             <div class="modal-description" id="modalDescription">
                 La description complète de l'application sera chargée ici...
             </div>
@@ -502,10 +530,8 @@
 
     <script defer>
         // --- Données des Applications ---
-        // NOTE: Assurez-vous que les chemins d'images ('images/nom.png')
-        // correspondent à l'emplacement réel de vos images sur GitHub Pages.
-        // Si les images sont à la racine, utilisez juste 'nom.png'.
-        // Si elles sont hébergées ailleurs, utilisez l'URL complète.
+        // IMPORTANT: Mettez à jour les chemins `image` (icône) et `previewImage` (aperçu)
+        // pour qu'ils correspondent à l'emplacement de vos fichiers sur GitHub Pages.
         const apps = [
             {
                 id: 'siestefm',
@@ -513,11 +539,12 @@
                 tech: ['html'],
                 category: 'musique',
                 description: 'Sieste FM est une webradio conçue pour favoriser la relaxation et la méditation. Elle propose une sélection de musiques apaisantes, telles que "Blues in the Light of Dawn", pour créer une ambiance propice au repos. L\'application inclut des options de minuterie (10, 15, 30 minutes ou illimité) pour programmer une sieste, ainsi qu\'une fonction d\'alarme musicale pour un réveil en douceur. Parfaite pour une pause détente à tout moment de la journée.',
-                updated: 'Il y a 10 heures', // Format plus lisible
+                updated: 'Il y a 10 heures',
                 demoUrl: 'https://ericsotoca.github.io/SiesteFM',
-                sourceUrl: 'https://ericsotoca.github.io/SiesteFM', // Gardé pour référence future
-                image: 'images/siestefm.png',
-                license: null // Ajouté pour correspondre à la logique JS
+                sourceUrl: 'https://ericsotoca.github.io/SiesteFM',
+                image: 'images/logo_siestefm.png', // Icône pour la carte et header modale
+                previewImage: 'images/siestefm_preview.png', // Image d'aperçu pour la modale
+                license: null
             },
             {
                 id: 'sotocawebradio',
@@ -528,7 +555,8 @@
                 updated: 'Il y a 20 heures',
                 demoUrl: 'https://ericsotoca.github.io/webradio',
                 sourceUrl: 'https://ericsotoca.github.io/webradio',
-                image: 'images/sotocawebradio.png',
+                image: 'images/logo_sotocawebradio.png',
+                previewImage: 'images/sotocawebradio_preview.png', // REMPLACER par le vrai chemin
                 license: null
             },
             {
@@ -540,7 +568,8 @@
                 updated: 'Il y a 20 heures',
                 demoUrl: 'https://ericsotoca.github.io/larouedelavie',
                 sourceUrl: 'https://ericsotoca.github.io/larouedelavie',
-                image: 'images/larouedelavie.png',
+                image: 'images/logo_larouedelavie.png',
+                previewImage: 'images/larouedelavie_preview.png', // REMPLACER par le vrai chemin
                 license: null
             },
             {
@@ -550,12 +579,12 @@
                 category: 'jeux',
                 description: 'Dans la Tête d\'un Champion est un jeu de réflexion et de stratégie qui met à l\'épreuve vos compétences cognitives et tactiques. Inspiré des jeux télévisés, il propose des défis où vous devez sélectionner et placer des réponses dans une grille pour accumuler des points. Avec des options de mise (75% ou 100% des gains), des statistiques de réussite (par exemple, 89%), et des historiques de parties, ce jeu offre une expérience immersive pour les amateurs de quiz et de challenges intellectuels.',
                 updated: 'Il y a 4 jours',
-                demoUrl: 'https://ericsotoca.github.io/awale', // Note: L'URL pointe vers /awale, est-ce correct ?
+                demoUrl: 'https://ericsotoca.github.io/awale',
                 sourceUrl: 'https://ericsotoca.github.io/awale',
-                image: 'images/danslatetedunchampion.png',
+                image: 'images/logo_danslatetedunchampion.png',
+                previewImage: 'images/danslatetedunchampion_preview.png', // REMPLACER par le vrai chemin
                 license: null
             }
-            // Ajouter d'autres applications ici
         ];
 
         // --- Éléments du DOM ---
@@ -571,12 +600,15 @@
         const modalDescription = document.getElementById('modalDescription');
         const startAppBtn = document.getElementById('startAppBtn');
         const copyrightYearSpan = document.getElementById('copyright-year');
+        // Éléments pour l'image d'aperçu
+        const modalImagePreview = document.getElementById('modalImagePreview');
+        const modalImagePreviewContainer = document.getElementById('modalImagePreviewContainer');
 
         // --- Fonctions ---
 
-        // Génère les cartes d'application dans la grille
+        // Génère les cartes d'application
         function generateAppCards(appsToShow) {
-            appsGrid.innerHTML = ''; // Vide la grille
+            appsGrid.innerHTML = '';
             if (appsToShow.length === 0) {
                  appsGrid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; color: #777;">Aucune application trouvée.</p>';
                  return;
@@ -585,34 +617,24 @@
             appsToShow.forEach(app => {
                 const appCard = document.createElement('div');
                 appCard.className = 'app-card';
-                appCard.dataset.id = app.id; // Utiliser data-id pour référence potentielle
+                appCard.dataset.id = app.id;
 
-                // Crée les tags de technologie
                 let techTagsHTML = app.tech.map(tech => {
-                    let techClass = '';
-                    let techName = '';
+                    let techClass = '', techName = '';
                     switch (tech.toLowerCase()) {
                         case 'html': techClass = 'tech-html'; techName = 'HTML'; break;
                         case 'javascript': case 'js': techClass = 'tech-js'; techName = 'JavaScript'; break;
-                        // Ajouter d'autres cas si nécessaire (css, python, etc.)
-                        default: techClass = ''; techName = tech; // Affiche le nom tel quel
+                        default: techClass = ''; techName = tech;
                     }
                     return `<span class="tech-tag ${techClass}">${techName}</span>`;
-                }).join(''); // Joint les spans HTML en une seule chaîne
+                }).join('');
 
-                // Crée le tag de licence s'il existe
-                let licenseTagHTML = app.license ?
-                    `<span class="license-tag">${app.license}</span>` : '';
+                let licenseTagHTML = app.license ? `<span class="license-tag">${app.license}</span>` : '';
+                const shortDescription = app.description.length > 90 ? app.description.substring(0, 90) + '...' : app.description;
 
-                // Tronque la description pour la carte
-                const shortDescription = app.description.length > 90 ?
-                    app.description.substring(0, 90) + '...' :
-                    app.description;
-
-                // Remplit la carte avec du HTML
                 appCard.innerHTML = `
                     <div class="app-icon">
-                        <img src="${app.image}" alt="Icône ${app.name}" loading="lazy"> <!-- Ajout loading="lazy" -->
+                        <img src="${app.image}" alt="Icône ${app.name}" loading="lazy">
                     </div>
                     <div class="app-info">
                         <div class="app-name">${app.name}</div>
@@ -624,46 +646,38 @@
                         <div class="update-info">Mis à jour ${app.updated}</div>
                     </div>
                 `;
-
-                // Ajoute un écouteur pour ouvrir la modale au clic
                 appCard.addEventListener('click', () => openAppModal(app));
                 appsGrid.appendChild(appCard);
             });
         }
 
-        // Filtre les applications par catégorie
+        // Filtre par catégorie
         function filterAppsByCategory(category) {
-            if (category === 'all') {
-                return apps; // Retourne toutes les apps
-            } else {
-                return apps.filter(app => app.category === category);
-            }
+            return category === 'all' ? apps : apps.filter(app => app.category === category);
         }
 
-        // Filtre les applications par terme de recherche (nom ou description)
+        // Filtre par recherche
         function filterAppsBySearch(term) {
             const lowerCaseTerm = term.toLowerCase().trim();
-            if (!lowerCaseTerm) {
-                 return apps; // Retourne toutes les apps si la recherche est vide
-            }
+            if (!lowerCaseTerm) return apps;
             return apps.filter(app =>
                 app.name.toLowerCase().includes(lowerCaseTerm) ||
                 app.description.toLowerCase().includes(lowerCaseTerm) ||
-                app.tech.some(tech => tech.toLowerCase().includes(lowerCaseTerm)) // Recherche aussi dans les technos
+                app.tech.some(tech => tech.toLowerCase().includes(lowerCaseTerm))
             );
         }
 
-        // Ouvre la modale avec les détails d'une application spécifique
+        // Ouvre la modale
         function openAppModal(app) {
+            // Contenu standard
             modalIcon.innerHTML = `<img src="${app.image}" alt="Icône ${app.name}">`;
             modalTitle.textContent = app.name;
             modalDescription.textContent = app.description;
             startAppBtn.href = app.demoUrl;
 
-            // Génère les tags techniques pour la modale
+            // Tags techniques
             modalTechTags.innerHTML = app.tech.map(tech => {
-                 let techClass = '';
-                 let techName = '';
+                 let techClass = '', techName = '';
                  switch (tech.toLowerCase()) {
                     case 'html': techClass = 'tech-html'; techName = 'HTML'; break;
                     case 'javascript': case 'js': techClass = 'tech-js'; techName = 'JavaScript'; break;
@@ -672,22 +686,36 @@
                 return `<span class="tech-tag ${techClass}">${techName}</span>`;
             }).join('');
 
-            // Ajoute le tag de licence dans la modale s'il existe
+            // Tag licence
             if (app.license) {
                 const licenseTag = document.createElement('span');
                 licenseTag.className = 'license-tag';
                 licenseTag.textContent = app.license;
-                modalTechTags.appendChild(licenseTag); // Ajoute comme élément séparé
+                modalTechTags.appendChild(licenseTag);
             }
 
-            modal.classList.add('show'); // Affiche la modale
-            document.body.style.overflow = 'hidden'; // Empêche le défilement du body derrière
+            // Gère l'image d'aperçu
+            if (app.previewImage && app.previewImage.trim() !== '') {
+                modalImagePreview.src = app.previewImage;
+                modalImagePreview.alt = `Aperçu de ${app.name}`;
+                modalImagePreviewContainer.classList.remove('hidden'); // Rend visible
+            } else {
+                modalImagePreview.src = ''; // Efface source précédente
+                modalImagePreview.alt = '';
+                modalImagePreviewContainer.classList.add('hidden'); // Cache le conteneur
+            }
+
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
         }
 
         // Ferme la modale
         function closeAppModal() {
             modal.classList.remove('show');
-            document.body.style.overflow = ''; // Restaure le défilement du body
+            document.body.style.overflow = '';
+             // Optionnel: Réinitialiser l'image pour libérer mémoire / éviter flash
+             modalImagePreview.src = '';
+             modalImagePreviewContainer.classList.add('hidden');
         }
 
         // Met à jour l'année du copyright
@@ -699,65 +727,50 @@
 
         // --- Écouteurs d'Événements ---
 
-        // Clic sur les boutons de catégorie
+        // Catégories
         categoryButtons.forEach(button => {
             button.addEventListener('click', () => {
-                // Désactive l'ancien bouton actif
                 document.querySelector('.category.active').classList.remove('active');
-                // Active le bouton cliqué
                 button.classList.add('active');
-
                 const selectedCategory = button.dataset.category;
-                searchInput.value = ''; // Réinitialise la recherche en changeant de catégorie
-                const filteredApps = filterAppsByCategory(selectedCategory);
-                generateAppCards(filteredApps);
+                searchInput.value = '';
+                generateAppCards(filterAppsByCategory(selectedCategory));
             });
         });
 
-        // Clic sur le logo/titre pour revenir à l'accueil
+        // Accueil (logo)
         homeLink.addEventListener('click', () => {
-            // Réinitialise la catégorie active à "Tous"
             document.querySelector('.category.active').classList.remove('active');
             document.querySelector('.category[data-category="all"]').classList.add('active');
-            // Vide la barre de recherche
             searchInput.value = '';
-            // Affiche toutes les applications
             generateAppCards(apps);
         });
 
-        // Saisie dans la barre de recherche (avec un petit délai pour éviter trop d'appels)
+        // Recherche (avec debounce)
         let searchTimeout;
         searchInput.addEventListener('input', () => {
             clearTimeout(searchTimeout);
             searchTimeout = setTimeout(() => {
                 const searchTerm = searchInput.value;
-                 // Réinitialise la catégorie active à "Tous" lors de la recherche
-                 document.querySelector('.category.active').classList.remove('active');
-                 document.querySelector('.category[data-category="all"]').classList.add('active');
-                 const filteredApps = filterAppsBySearch(searchTerm);
-                generateAppCards(filteredApps);
-            }, 250); // Délai de 250ms
+                 document.querySelector('.category.active')?.classList.remove('active'); // Optionnel: désélectionne cat.
+                 document.querySelector('.category[data-category="all"]')?.classList.add('active'); // Sélectionne 'Tous'
+                 generateAppCards(filterAppsBySearch(searchTerm));
+            }, 250);
         });
 
-        // Fermeture de la modale
+        // Fermeture modale (bouton, overlay, Echap)
         closeModalBtn.addEventListener('click', closeAppModal);
         modal.addEventListener('click', (event) => {
-            // Ferme si on clique sur le fond de la modale (l'overlay)
-            if (event.target === modal) {
-                closeAppModal();
-            }
+            if (event.target === modal) closeAppModal();
         });
-        // Fermeture avec la touche Echap
         document.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape' && modal.classList.contains('show')) {
-                closeAppModal();
-            }
+            if (event.key === 'Escape' && modal.classList.contains('show')) closeAppModal();
         });
 
 
         // --- Initialisation ---
-        updateCopyrightYear(); // Met à jour l'année du footer
-        generateAppCards(apps); // Affiche toutes les applications au chargement
+        updateCopyrightYear();
+        generateAppCards(apps); // Affichage initial
 
     </script>
 </body>
