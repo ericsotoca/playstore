@@ -87,7 +87,7 @@
             position: relative; background: #fff; border-radius: 10px;
             max-width: 850px; width: 100%; max-height: 90vh;
             overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            padding: 0; display: flex; flex-direction: row;
+            padding: 0; display: flex; flex-direction: row; /* Par défaut en ligne pour desktop */
             opacity: 0; transform: scale(0.95);
             transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
         }
@@ -99,7 +99,7 @@
         }
         .close-modal:hover { color: #555; transform: scale(1.1); }
 
-        /* --- Structure Colonnes Modale --- */
+        /* --- Structure Colonnes Modale (Desktop) --- */
         .modal-column-left {
             flex: 1; min-width: 0; padding: 2rem 1.5rem 2rem 2rem;
             display: flex; flex-direction: column; overflow-y: auto;
@@ -138,15 +138,52 @@
 
         /* --- Responsive --- */
         @media (max-width: 768px) {
-            .modal-content { flex-direction: column; max-width: 500px; max-height: 85vh; overflow-y: auto; overflow-x: hidden; }
-            .modal-column-left, .modal-column-right { max-height: none; overflow-y: visible; }
-            .modal-column-left { padding: 1.5rem; order: 2; }
-            .modal-left-actions { margin-top: 1.5rem; }
-            .modal-column-right { order: 1; flex-basis: auto; width: 100%; background-color: #e9edf0; } /* Hauteur auto */
-            #modalImagePreviewContainer { padding: 0.5rem; }
-            .modal-icon { width: 45px; height: 45px; } #modalTitle { font-size: 1.3rem; } #modalCategory { font-size: 0.8rem; } #modalDescription { font-size: 0.9rem; }
-            #startAppBtn { font-size: 0.95rem; padding: 0.6rem 1.5rem; } #closeModalBtnBottom { font-size: 0.85rem; padding: 0.4rem 1.2rem; }
+            .modal-content {
+                flex-direction: column; /* Passe en mode colonne */
+                max-width: 500px;
+                max-height: 85vh;
+                overflow-y: auto; /* Active le scroll pour la modale entière si besoin */
+                overflow-x: hidden;
+            }
+            /* Retire les limites de hauteur spécifiques aux colonnes sur mobile */
+            .modal-column-left, .modal-column-right {
+                max-height: none;
+                overflow-y: visible; /* Le scroll est géré par .modal-content */
+            }
+
+            /* ------ MODIFICATION ICI ------ */
+            /* Colonne de texte (gauche) vient EN PREMIER */
+            .modal-column-left {
+                padding: 1.5rem;
+                order: 1; /* <- Changé de 2 à 1 */
+            }
+
+            /* Colonne d'image (droite) vient APRÈS */
+            .modal-column-right {
+                order: 2; /* <- Changé de 1 à 2 */
+                flex-basis: auto; /* Hauteur auto */
+                width: 100%;
+                background-color: #e9edf0;
+                margin-top: 1rem; /* Ajoute un peu d'espace avant l'image */
+            }
+            /* ------ FIN MODIFICATION ------ */
+
+            #modalImagePreviewContainer { padding: 1rem 0.5rem 0.5rem 0.5rem; } /* Ajuste padding image */
+
+            .modal-left-actions {
+                margin-top: 1.5rem; /* Espace avant les boutons */
+                padding-top: 0; /* Reset padding top car géré par margin-top */
+             }
+
+            /* Ajustements de taille pour mobile */
+            .modal-icon { width: 45px; height: 45px; }
+            #modalTitle { font-size: 1.3rem; }
+            #modalCategory { font-size: 0.8rem; }
+            #modalDescription { font-size: 0.9rem; margin-bottom: 1.5rem; }
+            #startAppBtn { font-size: 0.95rem; padding: 0.6rem 1.5rem; }
+            #closeModalBtnBottom { font-size: 0.85rem; padding: 0.4rem 1.2rem; }
         }
+
          @media (max-width: 480px) {
               .header-content { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
               .search-bar { width: 100%; margin: 0.5rem 0 0 0; }
@@ -155,6 +192,9 @@
               .modal-content { max-width: 95%; }
               .modal-column-left { padding: 1.2rem; }
               #modalTitle { font-size: 1.2rem; }
+              /* Sur très petit écran, l'image peut prendre moins de place */
+               .modal-column-right { margin-top: 0.8rem; }
+               #modalImagePreviewContainer { padding-top: 0.8rem;}
          }
 
     </style>
@@ -188,7 +228,7 @@
         <div class="modal-content">
             <span class="close-modal" id="closeModal" title="Fermer">×</span>
 
-            <!-- Colonne Gauche: Infos + Actions -->
+            <!-- Colonne Gauche: Infos + Actions (Sera en haut sur mobile grâce au CSS) -->
             <div class="modal-column-left">
                 <div class="modal-left-header">
                     <div class="modal-icon" id="modalIcon"></div>
@@ -204,7 +244,7 @@
                 </div>
             </div>
 
-            <!-- Colonne Droite: Image Preview -->
+            <!-- Colonne Droite: Image Preview (Sera en bas sur mobile grâce au CSS) -->
             <div class="modal-column-right hidden" id="modalImagePreviewContainer">
                  <img id="modalImagePreview" src="" alt="Aperçu" loading="lazy">
             </div>
@@ -332,8 +372,6 @@
                 previewImage: 'images/acouphenes_preview.png',
                 license: null
             },
-            
-
             {
                 id: 'sotocawebradio',
                 picto: '🚧', // <-- Picto séparé
@@ -449,8 +487,11 @@
                 }
             } else { console.warn("Élément(s) image preview non trouvés"); }
             modal.classList.add('show'); document.body.classList.add('modal-open');
-            if (modalColumnLeft) { modalColumnLeft.scrollTop = 0; } else { console.warn("modalColumnLeft non trouvé pour scroll reset"); }
-            if (window.innerWidth <= 768 && modalContent) { modalContent.scrollTop = 0; }
+
+            // Reset scroll position (important pour mobile où la modale peut scroller)
+            if (modalContent) { modalContent.scrollTop = 0; }
+            // Si on voulait scroller que la colonne gauche (moins pertinent sur mobile)
+            // if (modalColumnLeft) { modalColumnLeft.scrollTop = 0; }
         }
 
         function closeAppModal() {
